@@ -7,266 +7,1154 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --cream: #F7F3EE; --warm-white: #FDFBF8; --linen: #EDE8E0; --linen2: #E0D9CE;
-  --gold: #B89A6A; --gold-light: #D4BA8E; --gold-pale: #F0E8D8;
-  --charcoal: #2C2824; --charcoal2: #4A4440; --stone: #8A8178; --stone-light: #B8B0A6;
-  --blush: #D4A5A0; --sage: #8A9E8C; --shadow-sm: 0 1px 4px rgba(44,40,36,0.06); --radius: 2px; --radius-md: 6px;
+  --cream: #F7F3EE;
+  --warm-white: #FDFBF8;
+  --linen: #EDE8E0;
+  --linen2: #E0D9CE;
+  --gold: #B89A6A;
+  --gold-light: #D4BA8E;
+  --gold-pale: #F0E8D8;
+  --charcoal: #2C2824;
+  --charcoal2: #4A4440;
+  --stone: #8A8178;
+  --stone-light: #B8B0A6;
+  --blush: #D4A5A0;
+  --sage: #8A9E8C;
+  --shadow-sm: 0 1px 4px rgba(44,40,36,0.06);
+  --shadow-md: 0 4px 20px rgba(44,40,36,0.08);
+  --shadow-lg: 0 8px 40px rgba(44,40,36,0.12);
+  --radius: 2px;
+  --radius-md: 6px;
 }
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Jost', sans-serif; background: var(--cream); color: var(--charcoal); min-height: 100vh; }
 
-header { background: var(--charcoal); padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 68px; position: sticky; top: 0; z-index: 200; }
-.logo { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 500; letter-spacing: 0.18em; color: var(--gold-light); text-transform: uppercase; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--charcoal);
+  min-height: 100vh;
+  font-weight: 400;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--charcoal);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+.logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
 .logo span { color: rgba(255,255,255,0.35); margin: 0 6px; }
-.header-right { display: flex; align-items: center; gap: 16px; }
-.meeting-date { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-style: italic; color: rgba(255,255,255,0.5); }
-.woty-pill { background: rgba(184,154,106,0.15); border: 1px solid rgba(184,154,106,0.3); padding: 5px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-light); }
-.sync-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); padding: 6px 14px; border-radius: var(--radius); font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.15s; }
-.sync-btn:hover { background: rgba(255,255,255,0.15); color: white; }
 
-.tab-bar { background: var(--warm-white); border-bottom: 1px solid var(--linen2); padding: 0 48px; display: flex; overflow-x: auto; scrollbar-width: none; }
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.meeting-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+}
+
+.woty-pill {
+  background: rgba(184,154,106,0.15);
+  border: 1px solid rgba(184,154,106,0.3);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+
+/* ── TAB BAR ── */
+.tab-bar {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--linen2);
+  padding: 0 48px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
 .tab-bar::-webkit-scrollbar { display: none; }
-.tab { padding: 16px 24px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: color 0.2s, border-color 0.2s; position: relative; top: 1px; }
+.tab {
+  padding: 16px 24px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+  position: relative;
+  top: 1px;
+}
 .tab:hover { color: var(--charcoal); }
 .tab.active { color: var(--gold); border-bottom-color: var(--gold); }
 
-.main { padding: 36px 48px 80px; max-width: 1400px; margin: 0 auto; }
+/* ── MAIN ── */
+.main {
+  padding: 36px 48px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .panel { display: none; }
-.panel.active { display: block; animation: fadeIn 0.25s ease; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+.panel.active { display: block; }
 
-.card { background: var(--warm-white); border: 1px solid var(--linen2); border-radius: var(--radius-md); padding: 28px 30px; box-shadow: var(--shadow-sm); }
-.section-eyebrow { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-.card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 500; color: var(--charcoal); margin-bottom: 4px; }
-.card-sub { font-size: 0.73rem; color: var(--stone); font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 20px; }
+/* ── CARDS ── */
+.card {
+  background: var(--warm-white);
+  border: 1px solid var(--linen2);
+  border-radius: var(--radius-md);
+  padding: 28px 30px;
+  box-shadow: var(--shadow-sm);
+}
 
-.loading-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 260px; gap: 16px; }
-.loading-spinner { width: 32px; height: 32px; border: 3px solid var(--linen2); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.loading-text { font-size: 0.82rem; color: var(--stone); font-style: italic; }
-.error-msg { background: rgba(212,165,160,0.12); border: 1px solid var(--blush); border-radius: var(--radius-md); padding: 20px 24px; color: #A05050; font-size: 0.84rem; line-height: 1.6; }
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+.card-sub {
+  font-size: 0.73rem;
+  color: var(--stone);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
 
-.sheet-bar { background: var(--gold-pale); border: 1px solid var(--linen2); border-radius: var(--radius-md); padding: 11px 18px; margin-bottom: 22px; font-size: 0.78rem; color: var(--charcoal2); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.sheet-bar a { color: var(--gold); font-weight: 700; text-decoration: none; }
-.sheet-bar a:hover { text-decoration: underline; }
-.sync-time { font-size: 0.7rem; color: var(--stone-light); font-style: italic; margin-left: auto; }
+.section-eyebrow {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
 
-/* AGENDA */
-.agenda-hero { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-.hero-card { padding: 22px 26px; border-radius: var(--radius-md); }
-.hero-card.woty-card { background: var(--charcoal); }
-.hero-card.book-card { background: var(--gold-pale); border: 1px solid var(--linen2); }
-.hero-card .hl-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.5; margin-bottom: 8px; }
-.hero-card.woty-card .hl-label { color: var(--gold-light); }
+/* ── AGENDA TAB ── */
+.agenda-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.hero-card {
+  padding: 22px 26px;
+  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+}
+.hero-card.woty-card {
+  background: var(--charcoal);
+  color: white;
+}
+.hero-card.book-card {
+  background: var(--gold-pale);
+  border: 1px solid var(--linen2);
+}
+.hero-card .hl-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+.hero-card.woty-card .hl-label { opacity: 0.5; color: var(--gold-light); }
 .hero-card.book-card .hl-label { color: var(--stone); }
-.hero-card .hl-val { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; line-height: 1.2; }
+.hero-card .hl-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.2;
+}
 .hero-card.woty-card .hl-val { color: var(--gold-light); }
 .hero-card.book-card .hl-val { color: var(--charcoal); }
-.invoicing-bar { background: linear-gradient(90deg, var(--gold), var(--gold-light)); color: white; padding: 14px 22px; border-radius: var(--radius-md); display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+
+.invoicing-bar {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+  color: white;
+  padding: 14px 22px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
 .invoicing-bar .inv-icon { font-size: 1.1rem; opacity: 0.85; }
 .invoicing-bar .inv-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; }
 .invoicing-bar .inv-val { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-style: italic; }
-.agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.agenda-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
 .agenda-list { list-style: none; }
-.agenda-list li { display: flex; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--linen); font-size: 0.88rem; color: var(--charcoal2); }
+.agenda-list li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--linen);
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: var(--charcoal2);
+}
 .agenda-list li:last-child { border-bottom: none; }
-.agenda-num { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--gold); min-width: 20px; }
-.agenda-time { margin-left: auto; font-size: 0.7rem; letter-spacing: 0.06em; color: var(--stone-light); font-weight: 600; text-transform: uppercase; }
-.update-group h4 { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--stone); margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--linen2); }
-.update-list { list-style: none; margin-bottom: 16px; }
-.update-list li { padding: 9px 12px; background: var(--cream); border-radius: var(--radius); font-size: 0.84rem; color: var(--charcoal2); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
-.update-list li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+.agenda-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  min-width: 20px;
+}
+.agenda-time {
+  margin-left: auto;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--stone-light);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.update-group h4 {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--linen2);
+}
+.update-list { list-style: none; margin-bottom: 20px; }
+.update-list li {
+  padding: 9px 12px;
+  background: var(--cream);
+  border-radius: var(--radius);
+  font-size: 0.84rem;
+  color: var(--charcoal2);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: text;
+  transition: background 0.15s;
+}
+.update-list li:hover { background: var(--gold-pale); }
+.update-list li::before {
+  content: '—';
+  color: var(--gold);
+  font-weight: 300;
+  flex-shrink: 0;
+}
 .reminder-list li::before { content: '!'; color: var(--blush); }
-hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
 
-/* WALL SUMMARY */
-.wall-summary { background: var(--charcoal); border-radius: var(--radius-md); padding: 20px 28px; margin-bottom: 24px; display: flex; align-items: center; flex-wrap: wrap; gap: 0; }
-.summary-total { display: flex; flex-direction: column; padding-right: 28px; margin-right: 28px; border-right: 1px solid rgba(255,255,255,0.1); }
-.summary-total-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; color: var(--gold-light); line-height: 1; }
-.summary-total-label { font-size: 0.64rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-top: 4px; }
-.summary-designers { display: flex; flex-wrap: wrap; gap: 10px; flex: 1; }
-.summary-chip { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 6px 14px 6px 8px; }
-.summary-chip-dot { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 0.8rem; font-style: italic; color: white; flex-shrink: 0; }
-.summary-chip-name { font-size: 0.78rem; font-weight: 600; color: rgba(255,255,255,0.75); }
-.summary-chip-count { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--gold-light); margin-left: 4px; }
+.add-btn {
+  background: none;
+  border: 1px dashed var(--linen2);
+  border-radius: var(--radius);
+  padding: 7px 12px;
+  width: 100%;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--stone-light);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: left;
+}
+.add-btn:hover { border-color: var(--gold); color: var(--gold); }
 
-/* WALL CONTROLS */
-.wall-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
-.search-box { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid var(--linen2); border-radius: var(--radius); font-family: 'Jost', sans-serif; font-size: 0.85rem; background: var(--warm-white); color: var(--charcoal); outline: none; }
+/* ── WALL TAB ── */
+.wall-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 16px;
+  border: 1px solid var(--linen2);
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  background: var(--warm-white);
+  color: var(--charcoal);
+  outline: none;
+  transition: border-color 0.15s;
+}
 .search-box:focus { border-color: var(--gold); }
 .search-box::placeholder { color: var(--stone-light); }
-.filter-pill { padding: 8px 16px; border: 1px solid var(--linen2); border-radius: 20px; background: var(--warm-white); font-family: 'Jost', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--stone); cursor: pointer; transition: all 0.15s; }
+
+.filter-pill {
+  padding: 8px 16px;
+  border: 1px solid var(--linen2);
+  border-radius: 20px;
+  background: var(--warm-white);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--stone);
+  cursor: pointer;
+  transition: all 0.15s;
+}
 .filter-pill:hover { border-color: var(--gold); color: var(--gold); }
 .filter-pill.active { background: var(--gold); border-color: var(--gold); color: white; }
 
-/* DESIGNER BLOCKS */
-.designer-block { background: var(--warm-white); border: 1px solid var(--linen2); border-radius: var(--radius-md); margin-bottom: 16px; box-shadow: var(--shadow-sm); overflow: hidden; }
-.designer-head { display: flex; align-items: center; gap: 14px; padding: 14px 20px; background: var(--linen); border-bottom: 1px solid var(--linen2); cursor: pointer; user-select: none; }
-.designer-initial { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: white; flex-shrink: 0; }
-.designer-name-h { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-style: italic; font-weight: 500; color: var(--charcoal); }
-.proj-count-badge { margin-left: auto; font-size: 0.68rem; font-weight: 600; color: var(--stone); background: var(--warm-white); padding: 3px 10px; border-radius: 20px; }
-.proj-col-headers { display: grid; grid-template-columns: 1fr 100px 120px 155px 1fr; gap: 12px; padding: 7px 20px; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-light); border-bottom: 1px solid var(--linen); }
-.proj-row { display: grid; grid-template-columns: 1fr 100px 120px 155px 1fr; gap: 12px; padding: 10px 20px; border-bottom: 1px solid var(--linen); font-size: 0.84rem; align-items: center; transition: background 0.1s; }
-.proj-row:last-child { border-bottom: none; }
-.proj-row:hover { background: var(--cream); }
-.proj-name { font-weight: 600; color: var(--charcoal); }
-.proj-support { font-size: 0.75rem; font-weight: 600; color: var(--sage); }
-.proj-builder { font-size: 0.76rem; color: var(--charcoal2); }
-.proj-notes { font-size: 0.75rem; color: var(--stone); font-style: italic; }
-
-/* STATUS BADGES */
-.status-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.71rem; font-weight: 700; white-space: nowrap; }
-.s-onboarding { background: rgba(138,106,184,0.1); color: #8A6AB8; }
-.s-open { background: rgba(180,100,90,0.1); color: #B4645A; }
-.s-wt { background: rgba(138,158,140,0.12); color: var(--sage); }
-.s-review { background: rgba(184,130,58,0.1); color: #B8823A; }
-.s-inprogress { background: rgba(58,106,184,0.1); color: #3A6AB8; }
-.s-punch { background: rgba(58,158,120,0.12); color: #3A9E78; }
-.s-hold { background: rgba(138,129,120,0.1); color: var(--stone); }
-
-/* TABLES */
-.claims-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.data-table { width: 100%; border-collapse: collapse; }
-.data-table th { text-align: left; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--stone-light); padding: 8px 12px; border-bottom: 1px solid var(--linen2); }
-.data-table td { padding: 11px 12px; border-bottom: 1px solid var(--linen); font-size: 0.84rem; vertical-align: middle; }
-.data-table tr:last-child td { border-bottom: none; }
-.data-table tr:hover td { background: var(--cream); }
-.data-table .ctr { text-align: center; }
-.cb { width: 18px; height: 18px; border: 1.5px solid var(--linen2); border-radius: 3px; display: inline-block; position: relative; vertical-align: middle; }
-.cb.done { background: var(--sage); border-color: var(--sage); }
-.cb.done::after { content: '✓'; color: white; font-size: 10px; font-weight: 700; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-.cb.xmark { background: var(--linen2); border-color: var(--linen2); }
-.cb.xmark::after { content: '✕'; color: var(--stone); font-size: 9px; font-weight: 700; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
-.client-name { font-weight: 600; color: var(--charcoal); }
-.eta-val { font-size: 0.72rem; color: var(--gold); font-style: italic; }
-.assignee-tag { display: inline-block; background: var(--gold-pale); color: var(--gold); font-size: 0.74rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
-.inq-status { font-size: 0.82rem; color: var(--stone); font-style: italic; }
-
-@media (max-width: 768px) {
-  header { padding: 0 20px; } .tab-bar { padding: 0 20px; } .main { padding: 24px 20px 60px; }
-  .agenda-hero, .agenda-grid, .claims-layout { grid-template-columns: 1fr; }
-  .proj-row, .proj-col-headers { grid-template-columns: 1fr 130px; }
-  .proj-support, .proj-builder, .proj-notes { display: none; }
+/* Designer blocks */
+.designer-block {
+  background: var(--warm-white);
+  border: 1px solid var(--linen2);
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
+.designer-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--linen);
+  border-bottom: 1px solid var(--linen2);
+  cursor: pointer;
+  user-select: none;
+}
+.designer-initial {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: white;
+  flex-shrink: 0;
+}
+.d-breanna { background: #B89A6A; }
+.d-holly { background: #8A9E8C; }
+.d-jami { background: #B8836A; }
+.d-jozlyn { background: #8A8A9E; }
+.d-maddy { background: #9E8A8A; }
+.d-mckenzie { background: #7A9E9A; }
+
+.designer-name-h {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--charcoal);
+}
+.proj-count-badge {
+  margin-left: auto;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--stone);
+  background: var(--warm-white);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.wall-add-proj {
+  background: none;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: var(--radius);
+  transition: background 0.15s;
+}
+.wall-add-proj:hover { background: var(--gold-pale); }
+
+/* Project rows */
+.proj-list { padding: 0 4px 8px; }
+.proj-row {
+  display: grid;
+  grid-template-columns: 28px 120px 100px 100px 160px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  cursor: grab;
+  transition: background 0.12s;
+  position: relative;
+}
+.proj-row:hover { background: var(--cream); }
+.proj-row.dragging { opacity: 0.4; }
+.proj-row.drag-over { border-top: 2px solid var(--gold); }
+
+.drag-handle {
+  color: var(--linen2);
+  font-size: 0.85rem;
+  cursor: grab;
+  text-align: center;
+  user-select: none;
+  transition: color 0.15s;
+}
+.proj-row:hover .drag-handle { color: var(--stone-light); }
+
+.proj-num-cell {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--stone-light);
+}
+.proj-name-cell {
+  font-weight: 600;
+  font-size: 0.86rem;
+  color: var(--charcoal);
+  outline: none;
+  border-radius: 3px;
+  padding: 2px 4px;
+  cursor: text;
+  min-width: 60px;
+}
+.proj-name-cell:hover { background: var(--gold-pale); }
+.proj-name-cell:focus { background: var(--gold-pale); box-shadow: 0 0 0 1px var(--gold); }
+
+.proj-collab-cell {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--sage);
+  background: rgba(138,158,140,0.1);
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  outline: none;
+  cursor: text;
+  text-align: center;
+}
+.proj-collab-cell:focus { box-shadow: 0 0 0 1px var(--sage); }
+.proj-collab-cell:empty::before { content: attr(data-placeholder); color: var(--stone-light); font-weight: 400; }
+
+.proj-status-cell {
+  font-size: 0.75rem;
+  font-weight: 600;
+  outline: none;
+  cursor: text;
+  padding: 3px 8px;
+  border-radius: 20px;
+  text-align: center;
+}
+.proj-status-cell.status-pr { background: rgba(184,154,106,0.12); color: var(--gold); }
+.proj-status-cell.status-hold { background: rgba(138,129,120,0.1); color: var(--stone); }
+.proj-status-cell.status-open { background: rgba(180,100,90,0.1); color: #B4645A; }
+.proj-status-cell.status-wt { background: rgba(138,158,140,0.12); color: var(--sage); }
+.proj-status-cell.status-onboarding { background: rgba(138,106,184,0.1); color: #8A6AB8; }
+.proj-status-cell.status-inprogress { background: rgba(58,106,184,0.1); color: #3A6AB8; }
+.proj-status-cell.status-review { background: rgba(184,130,58,0.1); color: #B8823A; }
+.proj-status-cell.status-punch { background: rgba(58,158,120,0.12); color: #3A9E78; }
+.proj-status-cell.status-none { background: transparent; color: var(--stone-light); }
+.proj-status-cell:focus { box-shadow: 0 0 0 1px var(--gold); }
+
+/* Status dropdown */
+.status-select {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 20px;
+  padding: 4px 8px;
+  cursor: pointer;
+  outline: none;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23B8B0A6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  padding-right: 22px;
+  transition: box-shadow 0.15s;
+}
+.status-select:focus { box-shadow: 0 0 0 1.5px var(--gold); }
+.status-select.status-pr { background-color: rgba(184,154,106,0.12); color: var(--gold); }
+.status-select.status-hold { background-color: rgba(138,129,120,0.1); color: var(--stone); }
+.status-select.status-open { background-color: rgba(180,100,90,0.1); color: #B4645A; }
+.status-select.status-wt { background-color: rgba(138,158,140,0.12); color: var(--sage); }
+.status-select.status-onboarding { background-color: rgba(138,106,184,0.1); color: #8A6AB8; }
+.status-select.status-inprogress { background-color: rgba(58,106,184,0.1); color: #3A6AB8; }
+.status-select.status-review { background-color: rgba(184,130,58,0.1); color: #B8823A; }
+.status-select.status-punch { background-color: rgba(58,158,120,0.12); color: #3A9E78; }
+.status-select.status-none { background-color: transparent; color: var(--stone-light); }
+
+/* Builder/GC cell */
+.proj-builder-cell {
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--charcoal2);
+  outline: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  cursor: text;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.15s;
+}
+.proj-builder-cell:hover { border-bottom-color: var(--linen2); background: var(--gold-pale); }
+.proj-builder-cell:focus { background: var(--gold-pale); box-shadow: 0 0 0 1px var(--gold); border-bottom-color: transparent; }
+.proj-builder-cell:empty::before { content: 'Builder / GC…'; color: var(--linen2); font-style: italic; }
+
+.proj-notes-cell {
+  font-size: 0.76rem;
+  color: var(--stone);
+  font-style: italic;
+  outline: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  cursor: text;
+}
+.proj-notes-cell:focus { background: var(--gold-pale); }
+.proj-notes-cell:empty::before { content: 'notes…'; color: var(--linen2); }
+
+.proj-delete-btn {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: var(--blush);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: opacity 0.15s, background 0.15s;
+  flex-shrink: 0;
+}
+.proj-row:hover .proj-delete-btn { opacity: 1; }
+.proj-delete-btn:hover { background: rgba(212,165,160,0.15); }
+
+/* Column headers for wall */
+.proj-col-headers {
+  display: grid;
+  grid-template-columns: 28px 120px 100px 100px 160px 1fr auto;
+  gap: 10px;
+  padding: 6px 16px;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-light);
+  border-bottom: 1px solid var(--linen);
+}
+
+/* ── CLAIMS TAB ── */
+.claims-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.claims-table { width: 100%; border-collapse: collapse; }
+.claims-table th {
+  text-align: left;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-light);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--linen2);
+}
+.claims-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--linen);
+  font-size: 0.85rem;
+  vertical-align: top;
+}
+.claims-table tr:last-child td { border-bottom: none; }
+.claims-table tr:hover td { background: var(--cream); }
+
+.cb-wrap { text-align: center; padding-top: 13px; }
+.cb {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--linen2);
+  border-radius: 3px;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.cb.checked { background: var(--sage); border-color: var(--sage); }
+.cb.checked::after { content: '✓'; color: white; font-size: 10px; font-weight: 700; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+
+.claim-client { font-weight: 600; color: var(--charcoal); }
+.claim-detail { color: var(--charcoal2); }
+.claim-status-cell {
+  font-size: 0.76rem;
+  color: var(--stone);
+  font-style: italic;
+}
+
+.status-eta-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.status-input {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  border: none;
+  background: none;
+  color: var(--charcoal2);
+  outline: none;
+  width: 100%;
+  padding: 2px 0;
+  border-bottom: 1px dashed var(--linen2);
+  transition: border-color 0.15s;
+}
+.status-input:focus { border-bottom-color: var(--gold); }
+.status-input::placeholder { color: var(--stone-light); font-style: italic; }
+.eta-input {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  border: none;
+  background: none;
+  color: var(--gold);
+  outline: none;
+  width: 100%;
+  padding: 2px 0;
+}
+.eta-input::placeholder { color: var(--linen2); }
+
+/* Photo table */
+.photo-table { width: 100%; border-collapse: collapse; }
+.photo-table th {
+  text-align: left;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-light);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--linen2);
+}
+.photo-table td {
+  padding: 11px 12px;
+  border-bottom: 1px solid var(--linen);
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+.photo-table tr:last-child td { border-bottom: none; }
+.photo-table tr:hover td { background: var(--cream); }
+.photo-table .ctr { text-align: center; }
+
+.row-del-btn {
+  background: none;
+  border: none;
+  color: var(--stone-light);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+tr:hover .row-del-btn { opacity: 1; }
+.row-del-btn:hover { color: var(--blush); }
+
+/* ── INQUIRIES TAB ── */
+.inq-table { width: 100%; border-collapse: collapse; }
+.inq-table th {
+  text-align: left;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--stone-light);
+  padding: 10px 14px;
+  border-bottom: 2px solid var(--linen2);
+}
+.inq-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--linen);
+  font-size: 0.85rem;
+  vertical-align: middle;
+}
+.inq-table tr:last-child td { border-bottom: none; }
+.inq-table tr:hover td { background: var(--cream); }
+
+.inq-select {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  border: 1px solid var(--linen2);
+  background: var(--cream);
+  color: var(--charcoal);
+  padding: 5px 10px;
+  border-radius: var(--radius);
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  min-width: 120px;
+}
+.inq-select:focus { border-color: var(--gold); }
+
+/* ── EDITABLE ── */
+[contenteditable="true"]:hover { background: var(--gold-pale) !important; }
+[contenteditable="true"]:focus { outline: none; background: var(--gold-pale) !important; box-shadow: 0 0 0 1.5px var(--gold); border-radius: 3px; }
+
+/* ── EDIT HINT ── */
+.edit-hint {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: var(--stone-light);
+  font-style: italic;
+  margin-bottom: 22px;
+}
+.edit-hint::before { content: '✦'; color: var(--gold); font-style: normal; }
+
+/* ── DIVIDER ── */
+hr { border: none; border-top: 1px solid var(--linen2); margin: 24px 0; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  header { padding: 0 20px; }
+  .tab-bar { padding: 0 20px; }
+  .main { padding: 24px 20px 60px; }
+  .agenda-hero, .agenda-grid, .claims-layout { grid-template-columns: 1fr; }
+  .proj-row { grid-template-columns: 24px 1fr auto; }
+  .proj-collab-cell, .proj-builder-cell, .proj-notes-cell { display: none; }
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.panel.active { animation: fadeIn 0.25s ease; }
+
+/* ── WALL SUMMARY BAR ── */
+.wall-summary {
+  background: var(--charcoal);
+  border-radius: var(--radius-md);
+  padding: 20px 28px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+.summary-total {
+  display: flex;
+  flex-direction: column;
+  padding-right: 28px;
+  margin-right: 28px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.summary-total-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-style: italic;
+  color: var(--gold-light);
+  line-height: 1;
+}
+.summary-total-label {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+.summary-designers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  flex: 1;
+}
+.summary-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 6px 14px 6px 8px;
+  transition: background 0.15s;
+}
+.summary-chip:hover { background: rgba(255,255,255,0.1); }
+.summary-chip-dot {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: white;
+  flex-shrink: 0;
+}
+.summary-chip-name {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  letter-spacing: 0.02em;
+}
+.summary-chip-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--gold-light);
+  margin-left: 4px;
+}
+
+/* Drag ghost */
+.proj-row[draggable="true"] { cursor: grab; }
+.proj-row[draggable="true"]:active { cursor: grabbing; }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">WAYS<span>·</span>Interiors</div>
   <div class="header-right">
-    <div class="meeting-date">WALL Meeting</div>
-    <div class="woty-pill" id="woty-header">Connection</div>
-    <button class="sync-btn" onclick="loadAll()">↻ Refresh</button>
+    <div class="meeting-date" contenteditable="true">WALL Meeting — May 4, 2025</div>
+    <div class="woty-pill">Connection</div>
   </div>
 </header>
 
+
+
+<!-- TABS -->
 <div class="tab-bar">
   <div class="tab active" onclick="switchTab('agenda',this)">Agenda</div>
   <div class="tab" onclick="switchTab('wall',this)">Wall Reviews</div>
-  <div class="tab" onclick="switchTab('claims',this)">Claims &amp; Photos</div>
+  <div class="tab" onclick="switchTab('claims',this)">Claims & Photos</div>
   <div class="tab" onclick="switchTab('inquiries',this)">Open Inquiries</div>
 </div>
 
 <div class="main">
 
-<!-- AGENDA -->
+<!-- ══════════ AGENDA ══════════ -->
 <div id="panel-agenda" class="panel active">
-  <div class="sheet-bar">
-    📊 Live from your <a href="https://docs.google.com/spreadsheets/d/1lJiHe-7srYWE50SMj5d8lq3Ba6sMTW5r8yX2zOST45A/edit" target="_blank">Google Sheet</a> — edit the sheet, then hit ↻ Refresh.
-    <span class="sync-time" id="sync-label"></span>
-  </div>
-  <div id="agenda-load" class="loading-screen"><div class="loading-spinner"></div><div class="loading-text">Loading from Google Sheets…</div></div>
-  <div id="agenda-body" style="display:none">
-    <div class="invoicing-bar"><div class="inv-icon">📋</div><div><div class="inv-label">Next Invoicing Day</div><div class="inv-val" id="invoicing-val">—</div></div></div>
-    <div class="agenda-hero">
-      <div class="hero-card woty-card"><div class="hl-label">Word of the Year</div><div class="hl-val" id="woty-val">—</div></div>
-      <div class="hero-card book-card"><div class="hl-label">Book Study</div><div class="hl-val" id="book-val">—</div></div>
+  <p class="edit-hint">Click any text to edit live. Changes stay for your session.</p>
+
+  <div class="invoicing-bar">
+    <div class="inv-icon">📋</div>
+    <div>
+      <div class="inv-label">Next Invoicing Day</div>
+      <div class="inv-val" contenteditable="true">Tuesday, May 5 — Invoicing Day</div>
     </div>
-    <div class="agenda-grid">
-      <div class="card">
-        <div class="section-eyebrow">Meeting Flow</div>
-        <ul class="agenda-list">
-          <li><span class="agenda-num">I.</span> HEY MONDAY! <span class="agenda-time">10 min</span></li>
-          <li><span class="agenda-num">II.</span> Book Study / Word Review <span class="agenda-time">15 min</span></li>
-          <li><span class="agenda-num">III.</span> Team Updates <span class="agenda-time">10 min</span></li>
-          <li><span class="agenda-num">IV.</span> WALL Reviews <span class="agenda-time">—</span></li>
-          <li><span class="agenda-num">V.</span> Calendar Review <span class="agenda-time">—</span></li>
+  </div>
+
+  <div class="agenda-hero" style="margin-bottom:20px;">
+    <div class="hero-card woty-card">
+      <div class="hl-label">Word of the Year</div>
+      <div class="hl-val" contenteditable="true">CONNECTION</div>
+    </div>
+    <div class="hero-card book-card">
+      <div class="hl-label">Book Study</div>
+      <div class="hl-val" contenteditable="true">Everyone Communicates — CH. 5</div>
+    </div>
+  </div>
+
+  <div class="agenda-grid">
+    <div class="card">
+      <div class="section-eyebrow">Meeting Flow</div>
+      <ul class="agenda-list" id="agenda-flow">
+        <li><span class="agenda-num">I.</span> HEY MONDAY! <span class="agenda-time">10 min</span></li>
+        <li><span class="agenda-num">II.</span> Book Study / Word Review <span class="agenda-time">15 min</span></li>
+        <li><span class="agenda-num">III.</span> Team Updates <span class="agenda-time">10 min</span></li>
+        <li><span class="agenda-num">IV.</span> WALL Reviews <span class="agenda-time">—</span></li>
+        <li><span class="agenda-num">V.</span> Calendar Review <span class="agenda-time">—</span></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="section-eyebrow">Team Updates</div>
+
+      <div class="update-group">
+        <h4>Need to Chat</h4>
+        <ul class="update-list" id="chat-list">
+          <li contenteditable="true">Calendar Best Practices (Ash)</li>
+          <li contenteditable="true">Made in the Shade — Designer M&amp;G</li>
+          <li contenteditable="true">Simplifi Automated Environments M&amp;G</li>
         </ul>
+        <button class="add-btn" onclick="addListItem('chat-list')">+ Add item</button>
       </div>
-      <div class="card">
-        <div class="section-eyebrow">Team Updates</div>
-        <div class="update-group"><h4>Need to Chat</h4><ul class="update-list" id="list-chat"></ul></div>
-        <hr>
-        <div class="update-group"><h4>Calendar Review</h4><ul class="update-list" id="list-cal"></ul></div>
-        <hr>
-        <div class="update-group"><h4>Reminders</h4><ul class="update-list reminder-list" id="list-rem"></ul></div>
+
+      <hr>
+
+      <div class="update-group">
+        <h4>Calendar Review</h4>
+        <ul class="update-list" id="cal-review-list">
+          <li contenteditable="true">3 — Trade WTs</li>
+          <li contenteditable="true">Limbach PR</li>
+        </ul>
+        <button class="add-btn" onclick="addListItem('cal-review-list')">+ Add item</button>
+      </div>
+
+      <hr>
+
+      <div class="update-group">
+        <h4>Reminders</h4>
+        <ul class="update-list reminder-list" id="reminder-list">
+          <li contenteditable="true">Install Inventory Checklist — Ash Emailed last week</li>
+        </ul>
+        <button class="add-btn" onclick="addListItem('reminder-list')">+ Add reminder</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- WALL -->
+<!-- ══════════ WALL REVIEWS ══════════ -->
 <div id="panel-wall" class="panel">
   <div class="wall-controls">
-    <input class="search-box" type="text" placeholder="Search client, support, status…" oninput="applyFilter()">
-    <button class="filter-pill" onclick="togglePill(this,'onboarding')">Onboarding</button>
-    <button class="filter-pill" onclick="togglePill(this,'open contract')">Open Contract</button>
-    <button class="filter-pill" onclick="togglePill(this,'in progress')">In Progress</button>
-    <button class="filter-pill" onclick="togglePill(this,'trade wt')">Trade WT</button>
-    <button class="filter-pill" onclick="togglePill(this,'project review')">Project Review</button>
-    <button class="filter-pill" onclick="togglePill(this,'punch out')">Punch Out</button>
-    <button class="filter-pill" onclick="togglePill(this,'on hold')">On Hold</button>
+    <input class="search-box" type="text" placeholder="Search client, support, or note…" oninput="filterWall(this.value)">
+    <button class="filter-pill" id="fp-onboarding" onclick="toggleFilter('onboarding')">Onboarding</button>
+    <button class="filter-pill" id="fp-open" onclick="toggleFilter('open contract')">Open Contract</button>
+    <button class="filter-pill" id="fp-inprogress" onclick="toggleFilter('in progress')">In Progress</button>
+    <button class="filter-pill" id="fp-wt" onclick="toggleFilter('trade wt')">Trade WT</button>
+    <button class="filter-pill" id="fp-pr" onclick="toggleFilter('project review')">Project Review</button>
+    <button class="filter-pill" id="fp-punch" onclick="toggleFilter('punch out')">Punch Out</button>
+    <button class="filter-pill" id="fp-hold" onclick="toggleFilter('on hold')">On Hold</button>
   </div>
-  <div id="wall-load" class="loading-screen"><div class="loading-spinner"></div><div class="loading-text">Loading from Google Sheets…</div></div>
-  <div id="wall-body" style="display:none">
-    <div class="wall-summary" id="wall-summary"></div>
-    <div id="wall-blocks"></div>
-  </div>
+
+  <p class="edit-hint">Drag rows to reorder. Click any cell to edit. Choose a status from the dropdown or type your own.</p>
+
+  <div class="wall-summary" id="wall-summary-bar"></div>
+
+  <div id="wall-blocks"></div>
 </div>
 
-<!-- CLAIMS & PHOTOS -->
+<!-- ══════════ CLAIMS & PHOTOS ══════════ -->
 <div id="panel-claims" class="panel">
-  <div id="claims-load" class="loading-screen"><div class="loading-spinner"></div><div class="loading-text">Loading from Google Sheets…</div></div>
-  <div id="claims-body-wrap" style="display:none">
-    <div class="claims-layout">
-      <div class="card">
-        <div class="card-title">Claims</div><div class="card-sub">Team — open issues</div>
-        <table class="data-table"><thead><tr><th></th><th>Client</th><th>Claim</th><th>Status</th><th>ETA</th></tr></thead><tbody id="claims-rows"></tbody></table>
-      </div>
-      <div class="card">
-        <div class="card-title">Review / Photoshoots</div><div class="card-sub">Ash / April — wrapped projects</div>
-        <table class="data-table"><thead><tr><th>Client</th><th class="ctr">Gift</th><th class="ctr">Photos</th><th class="ctr">Review</th></tr></thead><tbody id="photos-rows"></tbody></table>
-      </div>
-    </div>
-  </div>
-</div>
+  <div class="claims-layout">
 
-<!-- INQUIRIES -->
-<div id="panel-inquiries" class="panel">
-  <div id="inq-load" class="loading-screen"><div class="loading-spinner"></div><div class="loading-text">Loading from Google Sheets…</div></div>
-  <div id="inq-body-wrap" style="display:none">
+    <!-- CLAIMS -->
     <div class="card">
-      <div class="card-title">Open Inquiries / Upcoming ICs</div><div class="card-sub">Needs Assigned or Scheduled</div>
-      <table class="data-table"><thead><tr><th>Client</th><th>Details / IC Info</th><th>Assigned To</th><th>Status</th></tr></thead><tbody id="inq-rows"></tbody></table>
+      <div class="card-title">Claims</div>
+      <div class="card-sub">Team — open issues</div>
+      <table class="claims-table" id="claims-table">
+        <thead>
+          <tr>
+            <th style="width:30px"></th>
+            <th>Client</th>
+            <th>Claim</th>
+            <th>Status Update</th>
+            <th>ETA</th>
+          </tr>
+        </thead>
+        <tbody id="claims-body">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <button class="add-btn" style="margin-top:12px;" onclick="addClaimRow()">+ Add claim</button>
     </div>
+
+    <!-- PHOTOSHOOTS -->
+    <div class="card">
+      <div class="card-title">Review / Photoshoots</div>
+      <div class="card-sub">Ash / April — wrapped projects</div>
+      <table class="photo-table" id="photo-table">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th class="ctr">Gift</th>
+            <th class="ctr">Photos</th>
+            <th class="ctr">Review</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="photo-body">
+          <!-- rows injected by JS -->
+        </tbody>
+      </table>
+      <button class="add-btn" style="margin-top:12px;" onclick="addPhotoRow()">+ Add client</button>
+    </div>
+
   </div>
 </div>
 
+<!-- ══════════ OPEN INQUIRIES ══════════ -->
+<div id="panel-inquiries" class="panel">
+  <div class="card">
+    <div class="card-title">Open Inquiries / Upcoming ICs</div>
+    <div class="card-sub">Needs Assigned or Scheduled</div>
+    <table class="inq-table" id="inq-table">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Details / IC Info</th>
+          <th>Assigned To</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="inq-body">
+        <!-- rows injected by JS -->
+      </tbody>
+    </table>
+    <button class="add-btn" style="margin-top:12px;" onclick="addInqRow()">+ Add inquiry</button>
+  </div>
 </div>
+
+</div><!-- /main -->
 
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbzjn-mEl8NRDcHy22pBx7-Fz29qWqnDQxChoKux70wzx-hw_UP3BJc0U4WBgUXvlB_Gmw/exec';
-const COLORS = { breanna:'#B89A6A', holly:'#8A9E8C', jami:'#B8836A', jozlyn:'#8A8A9E', maddy:'#9E8A8A', mckenzie:'#7A9E9A' };
-let activeFilters = new Set();
+// ══════════════════════════════════
+// DATA
+// ══════════════════════════════════
 
-async function fetchSheet(sheet) {
-  const res = await fetch(`${API}?sheet=${encodeURIComponent(sheet)}`);
-  const data = await res.json();
-  if (data.error) throw new Error(data.error);
-  return data.rows;
-}
+const TEAM_MEMBERS = ['Ashley','Breanna','Holly','Jami','Jozlyn','Lisa','Maddy','McKenzie'];
 
+const DESIGNERS = [
+  {
+    id: 'breanna', name: 'Breanna', color: 'd-breanna',
+    projects: [
+      {num:1,name:'Bellino',collab:'',status:'',notes:''},
+      {num:2,name:'Blatchford',collab:'',status:'',notes:''},
+      {num:3,name:'Blue Water',collab:'Annie',status:'',notes:''},
+      {num:4,name:'B. Linden',collab:'Annie',status:'',notes:''},
+      {num:5,name:'Frohardt',collab:'Annie',status:'PR',notes:'Schedule Emailed'},
+      {num:6,name:'Gordman',collab:'Annie/KRT',status:'',notes:''},
+      {num:7,name:'Hansen',collab:'',status:'',notes:''},
+      {num:8,name:'Lowndes',collab:'Annie',status:'Hold',notes:''},
+      {num:9,name:'L. Lowndes',collab:'',status:'',notes:'BUNDLED — 10'},
+      {num:10,name:'KOK',collab:'',status:'',notes:''},
+      {num:11,name:'M. Williams',collab:'Falcone',status:'',notes:''},
+      {num:12,name:'Vora',collab:'Annie',status:'WT',notes:'Trade WT 5/4 12:30PM'},
+    ]
+  },
+  {
+    id: 'holly', name: 'Holly', color: 'd-holly',
+    projects: [
+      {num:13,name:'Brown',collab:'Annie/RC',status:'',notes:''},
+      {num:14,name:'Simpson',collab:'Annie',status:'',notes:''},
+      {num:15,name:'Young',collab:'',status:'',notes:''},
+    ]
+  },
+  {
+    id: 'jami', name: 'Jami', color: 'd-jami',
+    projects: [
+      {num:16,name:'Belt Homes',collab:'',status:'',notes:''},
+      {num:17,name:'Carter',collab:'',status:'',notes:''},
+      {num:18,name:'Hagge (C/H)',collab:'',status:'',notes:''},
+      {num:19,name:'Freeman',collab:'Belt',status:'',notes:''},
+      {num:20,name:'Gold',collab:'',status:'',notes:'Add to Wall?'},
+      {num:21,name:'Hamill',collab:'',status:'',notes:'IC June'},
+      {num:22,name:'Harden',collab:'',status:'Open',notes:''},
+      {num:23,name:'Hill',collab:'',status:'',notes:''},
+      {num:24,name:'Jones',collab:'Holly/Annie',status:'PR',notes:'PR May 1'},
+      {num:25,name:'Keeler',collab:'',status:'',notes:''},
+      {num:26,name:'Kelly',collab:'Belt',status:'',notes:'Bundle'},
+      {num:27,name:'Linberg',collab:'',status:'',notes:''},
+      {num:28,name:'Mazurek',collab:'Belt',status:'Open',notes:''},
+      {num:29,name:'Meysenburg',collab:'Annie',status:'',notes:''},
+      {num:30,name:'Pred',collab:'',status:'',notes:''},
+      {num:31,name:'Scheve',collab:'Trademark',status:'',notes:''},
+      {num:32,name:'Scott',collab:'',status:'Hold',notes:''},
+    ]
+  },
+  {
+    id: 'jozlyn', name: 'Jozlyn', color: 'd-jozlyn',
+    projects: [
+      {num:33,name:'Bohlke',collab:'',status:'Hold',notes:''},
+      {num:34,name:'Davie',collab:'Annie',status:'',notes:''},
+      {num:35,name:'Eisele',collab:'Annie',status:'',notes:''},
+      {num:36,name:'Hicks',collab:'',status:'',notes:'HPMKT Items'},
+      {num:37,name:'McLaughlin',collab:'',status:'WT',notes:'Trade WT 5/7 12PM'},
+      {num:38,name:'Pink',collab:'',status:'',notes:''},
+      {num:39,name:'Riggs',collab:'Annie',status:'',notes:''},
+      {num:40,name:'Swim',collab:'Annie',status:'Open',notes:'Ghost — Open Invoice'},
+      {num:41,name:'Z. Williams',collab:'iCON',status:'Open',notes:'Open with Builder'},
+    ]
+  },
+  {
+    id: 'maddy', name: 'Maddy', color: 'd-maddy',
+    projects: [
+      {num:42,name:'Ehly',collab:'',status:'',notes:''},
+      {num:43,name:'Salts',collab:'Annie',status:'PR',notes:'PR 5/14 11:30AM'},
+      {num:44,name:'Stevens',collab:'Annie',status:'',notes:''},
+    ]
+  },
+  {
+    id: 'mckenzie', name: 'McKenzie', color: 'd-mckenzie',
+    projects: [
+      {num:45,name:'Eurek',collab:'Annie',status:'',notes:'Delivery Push Back'},
+      {num:46,name:'Goldsmith',collab:'THH',status:'',notes:''},
+      {num:47,name:'Hahn',collab:'Annie',status:'',notes:''},
+      {num:48,name:'Harvey',collab:'Falcone',status:'',notes:'Weekly Meeting'},
+      {num:49,name:'Limbach',collab:'',status:'PR',notes:'PR 5/6 10AM'},
+      {num:50,name:'Nanninga',collab:'',status:'',notes:''},
+      {num:51,name:'N. Thrasher',collab:'Annie',status:'',notes:''},
+      {num:52,name:'Sam',collab:'',status:'Open',notes:''},
+      {num:53,name:'Pearce',collab:'',status:'Open',notes:''},
+      {num:54,name:'Washkowski',collab:'',status:'',notes:'HH Sofa'},
+      {num:55,name:'Wertheim',collab:'Annie',status:'WT',notes:'Trade WT 5/5 1:30PM'},
+    ]
+  },
+];
+
+const CLAIMS_DATA = [
+  {done:false, client:'Swim', claim:'Broken Bowl', status:'', eta:''},
+  {done:false, client:'Martin', claim:'Amiso Claim — Install black feet?', status:'', eta:''},
+  {done:false, client:'Kavana', claim:'Return Status? Refund?', status:'', eta:''},
+];
+
+const PHOTO_DATA = [
+  {client:'Hicks', gift:true, photos:true, review:false},
+  {client:"O'Brien", gift:true, photos:false, review:false},
+  {client:'Hagg', gift:false, photos:'x', review:false},
+  {client:'Hahn', gift:true, photos:true, review:false},
+];
+
+const INQ_DATA = [
+  {client:'Keith', details:'Furniture & Finishes — Ash Scheduling', assignee:'Ashley', status:'Scheduling'},
+  {client:'', details:'', assignee:'', status:''},
+  {client:'', details:'', assignee:'', status:''},
+];
+
+// ══════════════════════════════════
+// TABS
+// ══════════════════════════════════
 function switchTab(name, el) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -274,226 +1162,392 @@ function switchTab(name, el) {
   el.classList.add('active');
 }
 
-function esc(s) {
-  if (!s && s !== 0) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// ══════════════════════════════════
+// AGENDA LISTS
+// ══════════════════════════════════
+function addListItem(listId) {
+  const ul = document.getElementById(listId);
+  const li = document.createElement('li');
+  li.contentEditable = 'true';
+  li.textContent = '';
+  ul.appendChild(li);
+  li.focus();
 }
 
-function show(loadId, bodyId) {
-  document.getElementById(loadId).style.display = 'none';
-  document.getElementById(bodyId).style.display = 'block';
+// ══════════════════════════════════
+// WALL REVIEWS — RENDER
+// ══════════════════════════════════
+
+function renderWallSummary() {
+  const total = DESIGNERS.reduce((sum, d) => sum + d.projects.length, 0);
+  const el = document.getElementById('wall-summary-bar');
+  if (!el) return;
+  const chips = DESIGNERS.map(d => `
+    <div class="summary-chip">
+      <div class="summary-chip-dot ${d.color}">${d.name[0]}</div>
+      <span class="summary-chip-name">${d.name}</span>
+      <span class="summary-chip-count">${d.projects.length}</span>
+    </div>
+  `).join('');
+  el.innerHTML = `
+    <div class="summary-total">
+      <span class="summary-total-num">${total}</span>
+      <span class="summary-total-label">Total Projects</span>
+    </div>
+    <div class="summary-designers">${chips}</div>
+  `;
 }
 
-function errBox(msg) {
-  return `<div class="error-msg"><strong>⚠️ Could not load data</strong><br>${msg}</div>`;
-}
+function renderWall() {
+  renderWallSummary();
+  const container = document.getElementById('wall-blocks');
+  container.innerHTML = '';
 
-async function loadAll() {
-  const btn = document.querySelector('.sync-btn');
-  btn.textContent = '↻ Syncing…';
-  await Promise.allSettled([loadAgenda(), loadWall(), loadClaims(), loadPhotos(), loadInquiries()]);
-  const now = new Date();
-  document.getElementById('sync-label').textContent = 'Synced ' + now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  btn.textContent = '↻ Refresh';
-}
+  DESIGNERS.forEach(designer => {
+    const block = document.createElement('div');
+    block.className = 'designer-block';
+    block.dataset.id = designer.id;
 
-// ── AGENDA ──
-async function loadAgenda() {
-  try {
-    const rows = await fetchSheet('Agenda');
-    const get = k => (rows.find(r => r['Item'] === k) || {})['Value'] || '—';
-    document.getElementById('woty-val').textContent = get('Word of the Year');
-    document.getElementById('book-val').textContent = get('Book Study');
-    document.getElementById('invoicing-val').textContent = get('Next Invoicing');
-    document.getElementById('woty-header').textContent = get('Word of the Year');
-    fillList('list-chat', rows.filter(r => r['Item']?.startsWith('Chat')).map(r => r['Value']));
-    fillList('list-cal', rows.filter(r => r['Item']?.startsWith('Calendar')).map(r => r['Value']));
-    fillList('list-rem', rows.filter(r => r['Item']?.startsWith('Reminder')).map(r => r['Value']));
-    show('agenda-load','agenda-body');
-  } catch(e) {
-    document.getElementById('agenda-load').innerHTML = errBox('Could not load Agenda tab. ' + e.message);
-  }
-}
+    const head = document.createElement('div');
+    head.className = 'designer-head';
+    head.innerHTML = `
+      <div class="designer-initial ${designer.color}">${designer.name[0]}</div>
+      <div class="designer-name-h">${designer.name}</div>
+      <div class="proj-count-badge" id="badge-${designer.id}">${designer.projects.length} projects</div>
+      <button class="wall-add-proj" onclick="event.stopPropagation();addProject('${designer.id}')">+ Add Project</button>
+    `;
+    head.onclick = () => {
+      const list = block.querySelector('.proj-list');
+      list.style.display = list.style.display === 'none' ? '' : 'none';
+    };
 
-function fillList(id, items) {
-  document.getElementById(id).innerHTML = items.filter(Boolean).map(t => `<li>${esc(t)}</li>`).join('')
-    || `<li style="color:var(--stone-light);font-style:italic">Nothing yet</li>`;
-}
+    const colHeaders = document.createElement('div');
+    colHeaders.className = 'proj-col-headers';
+    colHeaders.innerHTML = '<span></span><span>Client</span><span>Support</span><span>Builder / GC</span><span>Status</span><span>Notes</span><span></span>';
 
-// ── WALL ──
-async function loadWall() {
-  try {
-    const rows = await fetchSheet('Wall');
-    const groups = {};
-    rows.forEach(r => {
-      const d = (r['Designer'] || 'Unassigned').trim();
-      if (!groups[d]) groups[d] = [];
-      groups[d].push(r);
+    const list = document.createElement('div');
+    list.className = 'proj-list';
+    list.dataset.designerId = designer.id;
+
+    designer.projects.forEach((proj, idx) => {
+      list.appendChild(makeProjRow(designer.id, proj, idx));
     });
 
-    // Summary bar
-    const total = rows.length;
-    const chips = Object.entries(groups).map(([name, ps]) => {
-      const col = COLORS[name.toLowerCase()] || '#8A8178';
-      return `<div class="summary-chip">
-        <div class="summary-chip-dot" style="background:${col}">${name[0]}</div>
-        <span class="summary-chip-name">${esc(name)}</span>
-        <span class="summary-chip-count">${ps.length}</span>
-      </div>`;
-    }).join('');
-    document.getElementById('wall-summary').innerHTML = `
-      <div class="summary-total">
-        <span class="summary-total-num">${total}</span>
-        <span class="summary-total-label">Total Projects</span>
-      </div>
-      <div class="summary-designers">${chips}</div>`;
-
-    // Designer blocks
-    const container = document.getElementById('wall-blocks');
-    container.innerHTML = '';
-    Object.entries(groups).forEach(([name, ps]) => {
-      const col = COLORS[name.toLowerCase()] || '#8A8178';
-      const rowsHtml = ps.map(p => {
-        const st = (p['Status'] || '').trim();
-        const sc = sClass(st);
-        const statusHtml = st
-          ? `<span class="status-badge ${sc}">${esc(st)}</span>`
-          : `<span style="color:var(--stone-light);font-size:0.75rem">—</span>`;
-        return `<div class="proj-row"
-          data-name="${esc((p['Client']||'').toLowerCase())}"
-          data-support="${esc((p['Support']||'').toLowerCase())}"
-          data-status="${esc(st.toLowerCase())}"
-          data-notes="${esc((p['Notes']||'').toLowerCase())}">
-          <span class="proj-name">${esc(p['Client']||'')}</span>
-          <span class="proj-support">${esc(p['Support']||'')}</span>
-          <span class="proj-builder">${esc(p['Builder/GC']||'')}</span>
-          <span>${statusHtml}</span>
-          <span class="proj-notes">${esc(p['Notes']||'')}</span>
-        </div>`;
-      }).join('');
-
-      const block = document.createElement('div');
-      block.className = 'designer-block';
-      block.innerHTML = `
-        <div class="designer-head" onclick="toggleBlock(this)">
-          <div class="designer-initial" style="background:${col}">${name[0]}</div>
-          <div class="designer-name-h">${esc(name)}</div>
-          <div class="proj-count-badge" data-badge="${esc(name)}">${ps.length} projects</div>
-        </div>
-        <div class="proj-col-headers">
-          <span>Client</span><span>Support</span><span>Builder/GC</span><span>Status</span><span>Notes</span>
-        </div>
-        <div class="proj-list">${rowsHtml}</div>`;
-      container.appendChild(block);
-    });
-
-    show('wall-load','wall-body');
-    applyFilter();
-  } catch(e) {
-    document.getElementById('wall-load').innerHTML = errBox('Could not load Wall tab. ' + e.message);
-  }
+    block.appendChild(head);
+    block.appendChild(colHeaders);
+    block.appendChild(list);
+    container.appendChild(block);
+    setupDragDrop(list, designer.id);
+  });
 }
 
-function toggleBlock(head) {
-  const headers = head.nextElementSibling;
-  const list = headers.nextElementSibling;
-  const hidden = list.style.display === 'none';
-  list.style.display = hidden ? '' : 'none';
-  headers.style.display = hidden ? '' : 'none';
-}
-
-function sClass(s) {
+function statusClass(s) {
+  if (!s) return 'status-none';
   const l = s.toLowerCase();
-  if (l==='onboarding') return 's-onboarding';
-  if (l==='open contract') return 's-open';
-  if (l==='trade wt') return 's-wt';
-  if (l==='project review') return 's-review';
-  if (l==='in progress') return 's-inprogress';
-  if (l==='punch out') return 's-punch';
-  if (l==='on hold') return 's-hold';
-  return '';
+  if (l === 'onboarding') return 'status-onboarding';
+  if (l === 'open contract') return 'status-open';
+  if (l === 'trade wt') return 'status-wt';
+  if (l === 'project review') return 'status-review';
+  if (l === 'in progress') return 'status-inprogress';
+  if (l === 'punch out') return 'status-punch';
+  if (l === 'on hold') return 'status-hold';
+  // legacy fallbacks
+  if (l === 'pr') return 'status-pr';
+  if (l === 'hold') return 'status-hold';
+  if (l === 'open') return 'status-open';
+  if (l === 'wt') return 'status-wt';
+  return 'status-none';
 }
 
-function togglePill(btn, tag) {
+const STATUS_OPTIONS = ['', 'Onboarding', 'Open Contract', 'Trade WT', 'Project Review', 'In Progress', 'Punch Out', 'On Hold'];
+
+function makeProjRow(designerId, proj, idx) {
+  const row = document.createElement('div');
+  row.className = 'proj-row';
+  row.draggable = true;
+  row.dataset.idx = idx;
+
+  const sc = statusClass(proj.status);
+  const optionsHtml = STATUS_OPTIONS.map(o =>
+    `<option value="${o}" ${proj.status === o ? 'selected' : ''}>${o || '— Status —'}</option>`
+  ).join('');
+
+  row.innerHTML = `
+    <span class="drag-handle">⠿</span>
+    <span class="proj-name-cell" contenteditable="true">${escHtml(proj.name)}</span>
+    <span class="proj-collab-cell" contenteditable="true" data-placeholder="support…">${escHtml(proj.collab)}</span>
+    <span class="proj-builder-cell" contenteditable="true">${escHtml(proj.builder||'')}</span>
+    <select class="status-select ${sc}">${optionsHtml}</select>
+    <span class="proj-notes-cell" contenteditable="true">${escHtml(proj.notes)}</span>
+    <button class="proj-delete-btn" title="Remove">✕</button>
+  `;
+
+  // Auto-update status select color
+  const statusSel = row.querySelector('.status-select');
+  statusSel.addEventListener('change', () => {
+    statusSel.className = 'status-select ' + statusClass(statusSel.value);
+  });
+
+  // Delete
+  row.querySelector('.proj-delete-btn').onclick = (e) => {
+    e.stopPropagation();
+    const d = DESIGNERS.find(d => d.id === designerId);
+    d.projects.splice(idx, 1);
+    renderWall();
+  };
+
+  return row;
+}
+
+function addProject(designerId) {
+  const d = DESIGNERS.find(d => d.id === designerId);
+  d.projects.push({num: d.projects.length + 1, name:'New Client', collab:'', builder:'', status:'', notes:''});
+  renderWall();
+  // Focus new row's name cell
+  setTimeout(() => {
+    const block = document.querySelector(`[data-id="${designerId}"]`);
+    const rows = block.querySelectorAll('.proj-name-cell');
+    const last = rows[rows.length - 1];
+    if (last) { last.focus(); selectAll(last); }
+  }, 50);
+}
+
+function selectAll(el) {
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+// ══════════════════════════════════
+// DRAG & DROP
+// ══════════════════════════════════
+function setupDragDrop(list, designerId) {
+  let dragSrc = null;
+
+  list.querySelectorAll('.proj-row').forEach(row => {
+    row.addEventListener('dragstart', e => {
+      dragSrc = row;
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    row.addEventListener('dragend', () => {
+      row.classList.remove('dragging');
+      list.querySelectorAll('.proj-row').forEach(r => r.classList.remove('drag-over'));
+      // Sync DESIGNERS data order
+      const d = DESIGNERS.find(d => d.id === designerId);
+      const newOrder = [];
+      list.querySelectorAll('.proj-row').forEach(r => {
+        const nameCell = r.querySelector('.proj-name-cell');
+        const collabCell = r.querySelector('.proj-collab-cell');
+        const builderCell = r.querySelector('.proj-builder-cell');
+        const statusSel = r.querySelector('.status-select');
+        const notesCell = r.querySelector('.proj-notes-cell');
+        newOrder.push({
+          num: 0,
+          name: nameCell ? nameCell.textContent : '',
+          collab: collabCell ? collabCell.textContent : '',
+          builder: builderCell ? builderCell.textContent : '',
+          status: statusSel ? statusSel.value : '',
+          notes: notesCell ? notesCell.textContent : '',
+        });
+      });
+      d.projects = newOrder;
+    });
+    row.addEventListener('dragover', e => {
+      e.preventDefault();
+      list.querySelectorAll('.proj-row').forEach(r => r.classList.remove('drag-over'));
+      if (row !== dragSrc) row.classList.add('drag-over');
+    });
+    row.addEventListener('drop', e => {
+      e.preventDefault();
+      if (row !== dragSrc) {
+        list.insertBefore(dragSrc, row);
+      }
+    });
+  });
+}
+
+// ══════════════════════════════════
+// WALL FILTER
+// ══════════════════════════════════
+let activeFilters = new Set();
+function toggleFilter(tag) {
+  const btn = document.getElementById('fp-' + tag);
   if (activeFilters.has(tag)) { activeFilters.delete(tag); btn.classList.remove('active'); }
   else { activeFilters.add(tag); btn.classList.add('active'); }
-  applyFilter();
+  filterWall('');
+  document.querySelector('.search-box').dispatchEvent(new Event('input'));
 }
-
-function applyFilter() {
-  const q = (document.querySelector('.search-box')?.value || '').toLowerCase();
+function filterWall(q) {
+  const query = (q || document.querySelector('.search-box')?.value || '').toLowerCase();
+  let total = 0;
   document.querySelectorAll('.proj-row').forEach(row => {
-    const vals = ['name','support','status','notes'].map(k => row.dataset[k] || '');
-    const matchQ = !q || vals.some(v => v.includes(q));
-    const matchF = activeFilters.size === 0 || [...activeFilters].some(f => (row.dataset.status||'').includes(f));
-    row.style.display = matchQ && matchF ? '' : 'none';
+    const name = (row.querySelector('.proj-name-cell')?.textContent || '').toLowerCase();
+    const collab = (row.querySelector('.proj-collab-cell')?.textContent || '').toLowerCase();
+    const builder = (row.querySelector('.proj-builder-cell')?.textContent || '').toLowerCase();
+    const status = (row.querySelector('.status-select')?.value || '').toLowerCase();
+    const notes = (row.querySelector('.proj-notes-cell')?.textContent || '').toLowerCase();
+    const matchQ = !query || name.includes(query) || collab.includes(query) || builder.includes(query) || status.includes(query) || notes.includes(query);
+    const matchF = activeFilters.size === 0 || [...activeFilters].some(f => status.includes(f));
+    const show = matchQ && matchF;
+    row.style.display = show ? '' : 'none';
+    if (show) total++;
   });
-  document.querySelectorAll('.designer-block').forEach(block => {
-    const badge = block.querySelector('[data-badge]');
+  // Update badges
+  document.querySelectorAll('.proj-list').forEach(list => {
+    const did = list.dataset.designerId;
+    const badge = document.getElementById('badge-' + did);
     if (!badge) return;
-    const total = block.querySelectorAll('.proj-row').length;
-    const vis = block.querySelectorAll('.proj-row:not([style*="display: none"])').length;
-    badge.textContent = vis === total ? `${total} projects` : `${vis} / ${total}`;
+    const vis = list.querySelectorAll('.proj-row:not([style*="display: none"])').length;
+    const tot = list.querySelectorAll('.proj-row').length;
+    badge.textContent = vis === tot ? `${tot} projects` : `${vis} / ${tot}`;
   });
 }
 
-// ── CLAIMS ──
-async function loadClaims() {
-  try {
-    const rows = await fetchSheet('Claims');
-    document.getElementById('claims-rows').innerHTML = rows.map(r => {
-      const done = String(r['Done']).toLowerCase() === 'true';
-      return `<tr>
-        <td><div class="cb ${done?'done':''}"></div></td>
-        <td class="client-name">${esc(r['Client']||'')}</td>
-        <td>${esc(r['Claim']||'')}</td>
-        <td style="font-size:0.78rem;color:var(--charcoal2)">${esc(r['Status Update']||'')}</td>
-        <td class="eta-val">${esc(r['ETA']||'')}</td>
-      </tr>`;
-    }).join('') || '<tr><td colspan="5" style="color:var(--stone-light);font-style:italic;padding:16px 12px">No claims</td></tr>';
-    show('claims-load','claims-body-wrap');
-  } catch(e) {
-    document.getElementById('claims-load').innerHTML = errBox('Could not load Claims tab. ' + e.message);
-  }
+// ══════════════════════════════════
+// CLAIMS
+// ══════════════════════════════════
+function renderClaims() {
+  const tbody = document.getElementById('claims-body');
+  tbody.innerHTML = '';
+  CLAIMS_DATA.forEach((c, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="cb-wrap"><div class="cb ${c.done ? 'checked' : ''}" onclick="toggleCbIdx(this,${i})"></div></td>
+      <td><span class="claim-client" contenteditable="true">${escHtml(c.client)}</span></td>
+      <td><span class="claim-detail" contenteditable="true">${escHtml(c.claim)}</span></td>
+      <td>
+        <div class="status-eta-wrap">
+          <input class="status-input" type="text" placeholder="Status update…" value="${escHtml(c.status)}">
+        </div>
+      </td>
+      <td>
+        <input class="eta-input" type="text" placeholder="ETA…" value="${escHtml(c.eta)}">
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-// ── PHOTOS ──
-async function loadPhotos() {
-  try {
-    const rows = await fetchSheet('Photos');
-    document.getElementById('photos-rows').innerHTML = rows.map(r => `<tr>
-      <td class="client-name">${esc(r['Client']||'')}</td>
-      <td class="ctr">${cbHtml(r['Gift'])}</td>
-      <td class="ctr">${cbHtml(r['Photos'])}</td>
-      <td class="ctr">${cbHtml(r['Review'])}</td>
-    </tr>`).join('') || '<tr><td colspan="4" style="color:var(--stone-light);font-style:italic;padding:16px 12px">No entries</td></tr>';
-  } catch(e) {}
+function addClaimRow() {
+  CLAIMS_DATA.push({done:false, client:'', claim:'', status:'', eta:''});
+  renderClaims();
+  const rows = document.querySelectorAll('#claims-body tr');
+  const last = rows[rows.length - 1];
+  last?.querySelector('.claim-client')?.focus();
 }
 
-function cbHtml(v) {
-  const s = String(v).toLowerCase().trim();
-  if (s === 'true' || s === 'yes' || s === '✓') return '<div class="cb done"></div>';
-  if (s === 'x' || s === 'false' && s !== '') return '<div class="cb xmark"></div>';
-  return '<div class="cb"></div>';
+function toggleCbIdx(el, idx) {
+  el.classList.toggle('checked');
+  CLAIMS_DATA[idx].done = el.classList.contains('checked');
 }
 
-// ── INQUIRIES ──
-async function loadInquiries() {
-  try {
-    const rows = await fetchSheet('Inquiries');
-    document.getElementById('inq-rows').innerHTML = rows.filter(r => r['Client']).map(r => `<tr>
-      <td class="client-name">${esc(r['Client']||'')}</td>
-      <td style="font-size:0.84rem;color:var(--charcoal2)">${esc(r['Details']||'')}</td>
-      <td>${r['Assigned To'] ? `<span class="assignee-tag">${esc(r['Assigned To'])}</span>` : ''}</td>
-      <td class="inq-status">${esc(r['Status']||'')}</td>
-    </tr>`).join('') || '<tr><td colspan="4" style="color:var(--stone-light);font-style:italic;padding:16px 12px">No inquiries</td></tr>';
-    show('inq-load','inq-body-wrap');
-  } catch(e) {
-    document.getElementById('inq-load').innerHTML = errBox('Could not load Inquiries tab. ' + e.message);
-  }
+// ══════════════════════════════════
+// PHOTOS
+// ══════════════════════════════════
+function renderPhotos() {
+  const tbody = document.getElementById('photo-body');
+  tbody.innerHTML = '';
+  PHOTO_DATA.forEach((p, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><span contenteditable="true" class="claim-client">${escHtml(p.client)}</span></td>
+      <td class="ctr">${makeCbCell(p.gift, i, 'gift')}</td>
+      <td class="ctr">${makeCbCell(p.photos, i, 'photos')}</td>
+      <td class="ctr">${makeCbCell(p.review, i, 'review')}</td>
+      <td><button class="row-del-btn" onclick="removePhotoRow(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
 }
 
-loadAll();
+function makeCbCell(val, i, field) {
+  if (val === 'x') return `<div class="cb" style="background:var(--linen2);border-color:var(--linen2);cursor:pointer;" onclick="cycleCb(this,${i},'${field}')"><span style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:9px;color:var(--stone);">✕</span></div>`;
+  if (val) return `<div class="cb checked" onclick="cycleCb(this,${i},'${field}')"></div>`;
+  return `<div class="cb" onclick="cycleCb(this,${i},'${field}')"></div>`;
+}
+
+function cycleCb(el, i, field) {
+  const cur = PHOTO_DATA[i][field];
+  const next = cur === false ? true : cur === true ? 'x' : false;
+  PHOTO_DATA[i][field] = next;
+  renderPhotos();
+}
+
+function addPhotoRow() {
+  PHOTO_DATA.push({client:'', gift:false, photos:false, review:false});
+  renderPhotos();
+  const rows = document.querySelectorAll('#photo-body tr');
+  const last = rows[rows.length - 1];
+  last?.querySelector('[contenteditable]')?.focus();
+}
+
+function removePhotoRow(i) {
+  PHOTO_DATA.splice(i, 1);
+  renderPhotos();
+}
+
+// ══════════════════════════════════
+// INQUIRIES
+// ══════════════════════════════════
+function renderInquiries() {
+  const tbody = document.getElementById('inq-body');
+  tbody.innerHTML = '';
+  INQ_DATA.forEach((inq, i) => {
+    const tr = document.createElement('tr');
+    const memberOptions = TEAM_MEMBERS.map(m =>
+      `<option value="${m}" ${inq.assignee === m ? 'selected' : ''}>${m}</option>`
+    ).join('');
+    tr.innerHTML = `
+      <td><span contenteditable="true" class="claim-client">${escHtml(inq.client)}</span></td>
+      <td><span contenteditable="true" style="font-size:0.84rem;color:var(--charcoal2);">${escHtml(inq.details)}</span></td>
+      <td>
+        <select class="inq-select" onchange="INQ_DATA[${i}].assignee=this.value">
+          <option value="">Assign to…</option>
+          ${memberOptions}
+        </select>
+      </td>
+      <td><span contenteditable="true" class="claim-detail" style="font-size:0.82rem;font-style:italic;color:var(--stone);">${escHtml(inq.status)}</span></td>
+      <td><button class="row-del-btn" onclick="removeInqRow(${i})">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function addInqRow() {
+  INQ_DATA.push({client:'', details:'', assignee:'', status:''});
+  renderInquiries();
+  const rows = document.querySelectorAll('#inq-body tr');
+  const last = rows[rows.length - 1];
+  last?.querySelector('[contenteditable]')?.focus();
+}
+
+function removeInqRow(i) {
+  INQ_DATA.splice(i, 1);
+  renderInquiries();
+}
+
+// ══════════════════════════════════
+// UTILS
+// ══════════════════════════════════
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toggleCb(el) {
+  el.classList.toggle('checked');
+}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+renderWall();
+renderClaims();
+renderPhotos();
+renderInquiries();
 </script>
 </body>
 </html>

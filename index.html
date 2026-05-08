@@ -185,9 +185,22 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
   </div>
   <div id="agenda-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
   <div id="agenda-body" style="display:none">
-    <div class="invoicing-bar">
-      <div class="inv-icon">📋</div>
-      <div><div class="inv-label">Next Invoicing Day</div><div class="inv-val" id="invoicing-val">—</div></div>
+    <div style="display:grid;grid-template-columns:1fr auto;gap:16px;margin-bottom:20px;align-items:stretch;">
+      <div class="invoicing-bar" style="margin-bottom:0;">
+        <div class="inv-icon">📋</div>
+        <div><div class="inv-label">Next Invoicing Day</div><div class="inv-val" id="invoicing-val">—</div></div>
+      </div>
+      <div style="background:var(--charcoal);border-radius:var(--radius-md);padding:14px 32px;display:flex;align-items:center;gap:24px;">
+        <div style="text-align:center;">
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:5px;">Hours Goal</div>
+          <div id="hours-goal" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-style:italic;color:var(--gold-light);line-height:1;">—</div>
+        </div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:rgba(255,255,255,0.2);font-style:italic;">vs</div>
+        <div style="text-align:center;">
+          <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:5px;">Actual Hours</div>
+          <div id="hours-actual" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-style:italic;line-height:1;">—</div>
+        </div>
+      </div>
     </div>
     <div class="agenda-hero">
       <div class="hero-card woty-card"><div class="hl-label">Word of the Year</div><div class="hl-val" id="woty-val">—</div></div>
@@ -344,11 +357,20 @@ async function loadAgenda() {
     const woty = get('Word of the Year');
     const book = get('Book Study');
     const inv  = get('Next Invoicing');
+    const goal   = get('Hours Goal');
+    const actual = get('Hours Actual');
 
     document.getElementById('woty-val').textContent = woty;
     document.getElementById('book-val').textContent = book;
     document.getElementById('invoicing-val').textContent = inv;
     document.getElementById('woty-header').textContent = woty !== '—' ? woty : 'WAYS';
+
+    document.getElementById('hours-goal').textContent = goal !== '—' ? goal : '—';
+    const actualEl = document.getElementById('hours-actual');
+    actualEl.textContent = actual !== '—' ? actual : '—';
+    if (goal !== '—' && actual !== '—') {
+      actualEl.style.color = parseFloat(actual) >= parseFloat(goal) ? '#3A9E78' : '#D4A5A0';
+    }
 
     fillList('list-chat', rows.filter(r => r['Item'] && r['Item'].startsWith('Chat')).map(r => r['Value']));
     fillList('list-cal',  rows.filter(r => r['Item'] && r['Item'].startsWith('Calendar')).map(r => r['Value']));

@@ -263,12 +263,12 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
 <div id="panel-claims" class="panel">
   <div id="claims-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
   <div id="claims-body-wrap" style="display:none">
-    <div class="claims-layout">
-      <div class="card">
+    <div style="display:flex;flex-direction:column;gap:20px;">
+      <div class="card" style="overflow-x:auto;">
         <div class="card-title">Claims</div>
         <div class="card-sub">Team — open issues</div>
         <table class="data-table">
-          <thead><tr><th style="width:28px"></th><th>Client</th><th>Claim</th><th>Status</th><th>ETA</th></tr></thead>
+          <thead><tr><th>Client</th><th>Claim</th><th>Vendor</th><th>Accountability</th><th>Cost</th><th>Status Update</th><th>ETA</th></tr></thead>
           <tbody id="claims-rows"></tbody>
         </table>
       </div>
@@ -529,18 +529,26 @@ function applyFilter() {
 async function loadClaims() {
   try {
     const rows = await fetchSheet('Claims');
-    document.getElementById('claims-rows').innerHTML = rows.length
-      ? rows.map(r => {
-          const done = String(r['Done']).toLowerCase() === 'true';
+    // Only show rows where Status Update is not 'Done' (case-insensitive)
+    const open = rows.filter(r => {
+      const status = (r['Status Update'] || '').trim().toLowerCase();
+      return status !== 'done' && r['Client'];
+    });
+    document.getElementById('claims-rows').innerHTML = open.length
+      ? open.map(r => {
+          const cost = r['Cost'] ? `<span style="font-weight:600;color:var(--charcoal);">${esc(r['Cost'])}</span>` : '—';
+          const fault = r['Accountability'] ? `<span style="background:rgba(212,165,160,0.15);color:#A05050;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:20px;">${esc(r['Accountability'])}</span>` : '—';
           return `<tr>
-            <td><div class="cb ${done ? 'done' : ''}"></div></td>
             <td class="client-name">${esc(r['Client']||'')}</td>
-            <td>${esc(r['Claim']||'')}</td>
+            <td style="font-size:0.83rem;color:var(--charcoal2)">${esc(r['Claim']||'')}</td>
+            <td style="font-size:0.83rem;color:var(--stone)">${esc(r['Vendor']||'') || '—'}</td>
+            <td>${fault}</td>
+            <td>${cost}</td>
             <td style="font-size:0.78rem;color:var(--charcoal2)">${esc(r['Status Update']||'')}</td>
             <td class="eta-val">${esc(r['ETA']||'')}</td>
           </tr>`;
         }).join('')
-      : empty('No claims');
+      : `<tr><td colspan="7" class="empty-row">No open claims 🎉</td></tr>`;
     show('claims-load', 'claims-body-wrap');
   } catch(e) {
     showError('claims-load', 'Could not load the Claims tab. ' + e.message);

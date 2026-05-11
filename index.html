@@ -616,13 +616,42 @@ async function loadOperationsTab() {
     const socialLoad = document.getElementById('social-grid-load');
     socialGrid.innerHTML = SOCIAL_SUBS.map(sub => {
       const subRows = opsRows.filter(r => r['Section']?.trim() === 'Social Media & Content' && r['Subsection']?.trim() === sub);
-      const bullets = subRows.map(r => (r['Update']||'').trim()).filter(Boolean);
-      const bulletHtml = bullets.length
-        ? bullets.map(b => `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;">—</span><span>${esc(b)}</span></li>`).join('')
-        : `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--stone-light);font-style:italic;"><span style="color:var(--linen2);flex-shrink:0;">—</span><span>Nothing this week</span></li>`;
+      
+      // Check if any rows have a Sub-Subsection
+      const hasSubSubs = subRows.some(r => (r['Sub-Subsection']||'').trim());
+      
+      let bulletHtml;
+      if (hasSubSubs) {
+        // Group by Sub-Subsection
+        const subSubs = {};
+        subRows.forEach(r => {
+          const ss = (r['Sub-Subsection']||'').trim() || 'Other';
+          const upd = (r['Update']||'').trim();
+          if (!subSubs[ss]) subSubs[ss] = [];
+          if (upd) subSubs[ss].push(upd);
+        });
+        bulletHtml = Object.entries(subSubs).map(([ss, updates]) => {
+          const items = updates.length
+            ? updates.map(u => `<li style="display:flex;align-items:flex-start;gap:8px;padding:2px 0 2px 12px;font-size:0.81rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;">·</span><span>${esc(u)}</span></li>`).join('')
+            : '';
+          return `<li style="padding:4px 0;">
+            <div style="font-size:0.75rem;font-weight:600;color:var(--charcoal);display:flex;align-items:center;gap:6px;"><span style="color:var(--gold);">—</span>${esc(ss)}</div>
+            ${items ? `<ul style="list-style:none;">${items}</ul>` : ''}
+          </li>`;
+        }).join('');
+      } else {
+        // Simple bullet list
+        const bullets = subRows.map(r => (r['Update']||'').trim()).filter(Boolean);
+        bulletHtml = bullets.length
+          ? bullets.map(b => `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;">—</span><span>${esc(b)}</span></li>`).join('')
+          : `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--stone-light);font-style:italic;"><span style="color:var(--linen2);flex-shrink:0;">—</span><span>Nothing this week</span></li>`;
+      }
+
+      const emptyHtml = `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--stone-light);font-style:italic;"><span style="color:var(--linen2);flex-shrink:0;">—</span><span>Nothing this week</span></li>`;
+
       return `<div style="background:var(--cream);border-radius:var(--radius-md);padding:16px 18px;">
         <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--stone);margin-bottom:8px;">${esc(sub)}</div>
-        <ul style="list-style:none;">${bulletHtml}</ul>
+        <ul style="list-style:none;">${bulletHtml || emptyHtml}</ul>
       </div>`;
     }).join('');
     socialLoad.style.display = 'none';

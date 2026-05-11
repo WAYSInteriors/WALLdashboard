@@ -226,10 +226,21 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
         <div class="update-group"><h4>Reminders</h4><ul class="update-list reminder-list" id="list-rem"></ul></div>
       </div>
     </div>
+
+    <!-- OPS ASSISTANT UPDATE -->
+    <div class="card" style="margin-top:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div class="section-eyebrow">Operations Update</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--charcoal);">Weekly Update</div>
+        </div>
+      </div>
+      <div id="ops-load" style="color:var(--stone-light);font-style:italic;font-size:0.84rem;">Loading…</div>
+      <div id="ops-grid" style="display:none;grid-template-columns:1fr 1fr;gap:12px;"></div>
+    </div>
+
   </div>
 </div>
-
-<!-- WALL -->
 <div id="panel-wall" class="panel">
   <div class="wall-controls">
     <input class="search-box" type="text" placeholder="Search client, support, status…" oninput="applyFilter()">
@@ -243,18 +254,6 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
   </div>
   <div id="wall-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
   <div id="wall-body" style="display:none">
-    <!-- OPS ASSISTANT UPDATE -->
-    <div class="card" style="margin-bottom:20px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div>
-          <div class="section-eyebrow">Operations Assistant</div>
-          <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--charcoal);">Weekly Update</div>
-        </div>
-        <div id="ops-sync-time" style="font-size:0.7rem;color:var(--stone-light);font-style:italic;"></div>
-      </div>
-      <div id="ops-load" style="color:var(--stone-light);font-style:italic;font-size:0.84rem;">Loading…</div>
-      <div id="ops-grid" style="display:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;"></div>
-    </div>
     <div class="wall-summary" id="wall-summary"></div>
     <div id="wall-blocks"></div>
   </div>

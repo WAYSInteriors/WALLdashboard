@@ -602,7 +602,7 @@ async function loadOperationsTab() {
     // Open Office Issues
     const officeGrid = document.getElementById('office-issues-grid');
     const officeLoad = document.getElementById('office-issues-load');
-    const officeRows = opsRows.filter(r => r['Section']?.trim() === 'Open Issues & Claims');
+    const officeRows = opsRows.filter(r => r['Section']?.trim() === 'Open Office Issues');
     const officeBullets = officeRows.map(r => (r['Update']||'').trim()).filter(Boolean);
     const officeBulletHtml = officeBullets.length
       ? officeBullets.map(b => `<li style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:0.83rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;">—</span><span>${esc(b)}</span></li>`).join('')

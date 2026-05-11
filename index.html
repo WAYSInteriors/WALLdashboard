@@ -590,20 +590,12 @@ async function loadInquiries() {
 
 // ── OPS UPDATE ──
 const OPS_SECTIONS = [
-  'Ordering & Deliveries',
-  'Open Issues & Claims',
-  'Social Media & Content',
-  'Intern & Support',
-  'Anything from the Team?'
+  { key: 'Ordering & Deliveries',   icon: '📦', subs: [] },
+  { key: 'Open Issues & Claims',    icon: '🔧', subs: [] },
+  { key: 'Social Media & Content',  icon: '📱', subs: ['Published Content','Planned Content','Photo Editing Queue','Team Content','Newsletter'] },
+  { key: 'Intern & Support',        icon: '🤝', subs: [] },
+  { key: 'Anything from the Team?', icon: '💬', subs: [] },
 ];
-
-const OPS_ICONS = {
-  'Ordering & Deliveries':    '📦',
-  'Open Issues & Claims':     '🔧',
-  'Social Media & Content':   '📱',
-  'Intern & Support':         '🤝',
-  'Anything from the Team?':  '💬',
-};
 
 async function loadOpsUpdate() {
   try {
@@ -612,24 +604,57 @@ async function loadOpsUpdate() {
     const loadEl = document.getElementById('ops-load');
 
     const cards = OPS_SECTIONS.map(section => {
-      const row = rows.find(r => r['Section'] && r['Section'].trim() === section);
-      const update = row ? (row['Update'] || '').trim() : '';
-      const icon = OPS_ICONS[section] || '—';
-      return `<div style="background:var(--cream);border-radius:var(--radius-md);padding:14px 16px;">
-        <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
-          <span>${icon}</span><span>${esc(section)}</span>
-        </div>
-        <div style="font-size:0.84rem;color:${update ? 'var(--charcoal2)' : 'var(--stone-light)'};font-style:${update ? 'normal' : 'italic'};line-height:1.5;">
-          ${update ? esc(update) : 'No update this week'}
-        </div>
-      </div>`;
+      const icon = section.icon;
+      const key = section.key;
+
+      if (section.subs.length > 0) {
+        // Social Media & Content — render subcategories
+        const subItems = section.subs.map(sub => {
+          const subRows = rows.filter(r =>
+            r['Section'] && r['Section'].trim() === key &&
+            r['Subsection'] && r['Subsection'].trim() === sub
+          );
+          const bullets = subRows.map(r => (r['Update'] || '').trim()).filter(Boolean);
+          const bulletHtml = bullets.length
+            ? bullets.map(b => `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;margin-top:2px;">—</span><span>${esc(b)}</span></li>`).join('')
+            : `<li style="display:flex;align-items:flex-start;gap:8px;padding:3px 0;font-size:0.82rem;color:var(--stone-light);font-style:italic;"><span style="color:var(--linen2);flex-shrink:0;">—</span><span>Nothing this week</span></li>`;
+          return `<div style="margin-bottom:10px;">
+            <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--stone);margin-bottom:4px;">${esc(sub)}</div>
+            <ul style="list-style:none;">${bulletHtml}</ul>
+          </div>`;
+        }).join('');
+
+        return `<div style="background:var(--cream);border-radius:var(--radius-md);padding:16px 18px;grid-column:1/-1;">
+          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+            <span>${icon}</span><span>${esc(key)}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">${subItems}</div>
+        </div>`;
+
+      } else {
+        // Standard sections — bulleted list
+        const sectionRows = rows.filter(r =>
+          r['Section'] && r['Section'].trim() === key
+        );
+        const bullets = sectionRows.map(r => (r['Update'] || '').trim()).filter(Boolean);
+        const bulletHtml = bullets.length
+          ? bullets.map(b => `<li style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:0.83rem;color:var(--charcoal2);"><span style="color:var(--gold);flex-shrink:0;margin-top:2px;">—</span><span>${esc(b)}</span></li>`).join('')
+          : `<li style="display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:0.83rem;color:var(--stone-light);font-style:italic;"><span style="color:var(--linen2);flex-shrink:0;">—</span><span>Nothing this week</span></li>`;
+
+        return `<div style="background:var(--cream);border-radius:var(--radius-md);padding:16px 18px;">
+          <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+            <span>${icon}</span><span>${esc(key)}</span>
+          </div>
+          <ul style="list-style:none;">${bulletHtml}</ul>
+        </div>`;
+      }
     }).join('');
 
     grid.innerHTML = cards;
     loadEl.style.display = 'none';
     grid.style.display = 'grid';
   } catch(e) {
-    document.getElementById('ops-load').textContent = 'Could not load Ops update — make sure the OpsUpdate tab exists in your Google Sheet.';
+    document.getElementById('ops-load').textContent = 'Could not load Operations Update — make sure the OpsUpdate tab exists in your Google Sheet.';
   }
 }
 

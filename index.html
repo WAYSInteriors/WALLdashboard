@@ -243,6 +243,18 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
   </div>
   <div id="wall-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
   <div id="wall-body" style="display:none">
+    <!-- OPS ASSISTANT UPDATE -->
+    <div class="card" style="margin-bottom:20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div class="section-eyebrow">Operations Assistant</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--charcoal);">Weekly Update</div>
+        </div>
+        <div id="ops-sync-time" style="font-size:0.7rem;color:var(--stone-light);font-style:italic;"></div>
+      </div>
+      <div id="ops-load" style="color:var(--stone-light);font-style:italic;font-size:0.84rem;">Loading…</div>
+      <div id="ops-grid" style="display:none;display:grid;grid-template-columns:1fr 1fr;gap:12px;"></div>
+    </div>
     <div class="wall-summary" id="wall-summary"></div>
     <div id="wall-blocks"></div>
   </div>
@@ -337,6 +349,7 @@ async function loadAll() {
   await Promise.allSettled([
     loadAgenda(),
     loadWall(),
+    loadOpsUpdate(),
     loadClaims(),
     loadPhotos(),
     loadInquiries()
@@ -573,6 +586,51 @@ async function loadInquiries() {
     show('inq-load', 'inq-body-wrap');
   } catch(e) {
     showError('inq-load', 'Could not load the Inquiries tab. ' + e.message);
+  }
+}
+
+// ── OPS UPDATE ──
+const OPS_SECTIONS = [
+  'Ordering & Deliveries',
+  'Open Issues & Claims',
+  'Social Media & Content',
+  'Intern & Support',
+  'Anything from the Team?'
+];
+
+const OPS_ICONS = {
+  'Ordering & Deliveries':    '📦',
+  'Open Issues & Claims':     '🔧',
+  'Social Media & Content':   '📱',
+  'Intern & Support':         '🤝',
+  'Anything from the Team?':  '💬',
+};
+
+async function loadOpsUpdate() {
+  try {
+    const rows = await fetchSheet('OpsUpdate');
+    const grid = document.getElementById('ops-grid');
+    const loadEl = document.getElementById('ops-load');
+
+    const cards = OPS_SECTIONS.map(section => {
+      const row = rows.find(r => r['Section'] && r['Section'].trim() === section);
+      const update = row ? (row['Update'] || '').trim() : '';
+      const icon = OPS_ICONS[section] || '—';
+      return `<div style="background:var(--cream);border-radius:var(--radius-md);padding:14px 16px;">
+        <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--stone);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+          <span>${icon}</span><span>${esc(section)}</span>
+        </div>
+        <div style="font-size:0.84rem;color:${update ? 'var(--charcoal2)' : 'var(--stone-light)'};font-style:${update ? 'normal' : 'italic'};line-height:1.5;">
+          ${update ? esc(update) : 'No update this week'}
+        </div>
+      </div>`;
+    }).join('');
+
+    grid.innerHTML = cards;
+    loadEl.style.display = 'none';
+    grid.style.display = 'grid';
+  } catch(e) {
+    document.getElementById('ops-load').textContent = 'Could not load Ops update — make sure the OpsUpdate tab exists in your Google Sheet.';
   }
 }
 

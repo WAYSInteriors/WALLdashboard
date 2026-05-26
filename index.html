@@ -269,7 +269,7 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
         <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--charcoal);">Client Issues &amp; Claims</div>
       </div>
       <table class="data-table">
-        <thead><tr><th>Client</th><th>Claim</th><th>Vendor</th><th>Accountability</th><th>Cost</th><th>Status Update</th><th>ETA</th></tr></thead>
+        <thead><tr><th>Client</th><th>Claim</th><th>Vendor</th><th>Accountability</th><th>Cost</th><th>Notes</th><th>Status</th></tr></thead>
         <tbody id="claims-rows"></tbody>
       </table>
     </div>
@@ -583,18 +583,21 @@ async function loadOperationsTab() {
     grid.style.display = 'grid';
 
     // Open Claims
-    const open = claimRows.filter(r => (r['Status Update']||'').trim().toLowerCase() !== 'done' && r['Client']);
+    const open = claimRows.filter(r => (r['Status']||'').trim().toLowerCase() !== 'closed' && r['Client']);
     document.getElementById('claims-rows').innerHTML = open.length
       ? open.map(r => {
           const cost = r['Cost'] ? `<span style="font-weight:600;color:var(--charcoal);">${esc(r['Cost'])}</span>` : '—';
           const acct = r['Accountability'] ? `<span style="background:rgba(212,165,160,0.15);color:#A05050;font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:20px;">${esc(r['Accountability'])}</span>` : '—';
+          const status = (r['Status']||'').trim();
+          const sc = status.toLowerCase() === 'in progress' ? 'background:rgba(58,106,184,0.1);color:#3A6AB8;' : status.toLowerCase() === 'open' ? 'background:rgba(180,100,90,0.1);color:#B4645A;' : 'background:rgba(138,129,120,0.1);color:var(--stone);';
+          const statusHtml = status ? `<span style="font-size:0.72rem;font-weight:700;padding:2px 8px;border-radius:20px;${sc}">${esc(status)}</span>` : '—';
           return `<tr>
             <td class="client-name">${esc(r['Client']||'')}</td>
             <td style="font-size:0.83rem;color:var(--charcoal2)">${esc(r['Claim']||'')}</td>
             <td style="font-size:0.83rem;color:var(--stone)">${esc(r['Vendor']||'')||'—'}</td>
             <td>${acct}</td><td>${cost}</td>
-            <td style="font-size:0.78rem;color:var(--charcoal2)">${esc(r['Status Update']||'')}</td>
-            <td class="eta-val">${esc(r['ETA']||'')}</td>
+            <td style="font-size:0.78rem;color:var(--charcoal2)">${esc(r['Notes']||'')}</td>
+            <td>${statusHtml}</td>
           </tr>`;
         }).join('')
       : `<tr><td colspan="7" class="empty-row">No open claims 🎉</td></tr>`;

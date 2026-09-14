@@ -173,6 +173,7 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
   <div class="tab" onclick="switchTab('wall',this)">Wall Reviews</div>
   <div class="tab" onclick="switchTab('operations',this)">Operations</div>
   <div class="tab" onclick="switchTab('inquiries',this)">Open Inquiries</div>
+  <div class="tab" onclick="switchTab('closeout',this)">Close Out</div>
 </div>
 
 <div class="main">
@@ -324,6 +325,39 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
   </div>
 </div>
 
+<!-- CLOSE OUT -->
+<div id="panel-closeout" class="panel">
+  <div id="closeout-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
+  <div id="closeout-body" style="display:none">
+    <div class="card">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+        <div>
+          <div class="section-eyebrow">Project Close Out</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--charcoal);">Active Projects</div>
+        </div>
+        <div style="font-size:0.72rem;color:var(--stone-light);font-style:italic;">Completed projects hide automatically when all boxes are checked</div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="data-table" id="closeout-table">
+          <thead>
+            <tr>
+              <th>Project</th>
+              <th class="ctr">Invoices<br>Closed</th>
+              <th class="ctr">Phy. Wall<br>Archive</th>
+              <th class="ctr">Scanned<br>into Houzz</th>
+              <th class="ctr">Close Out<br>Email</th>
+              <th class="ctr">Houzz<br>Archive</th>
+              <th class="ctr">Harvest<br>Archive</th>
+              <th class="ctr">Progress</th>
+            </tr>
+          </thead>
+          <tbody id="closeout-rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
 </div><!-- /main -->
 
 <script>
@@ -374,7 +408,8 @@ async function loadAll() {
     loadAgenda(),
     loadWall(),
     loadOperationsTab(),
-    loadInquiries()
+    loadInquiries(),
+    loadCloseOut()
   ]);
   const now = new Date();
   document.getElementById('sync-label').textContent =
@@ -704,6 +739,57 @@ async function loadInquiries() {
     show('inq-load', 'inq-body-wrap');
   } catch(e) {
     showError('inq-load', 'Could not load the Inquiries tab. ' + e.message);
+  }
+}
+
+// ── CLOSE OUT ──
+const CLOSEOUT_COLS = ['Invoices Closed','Phy. Wall Archive','Scanned into Houzz','Close Out Email','Houzz Archive','Harvest Archive'];
+
+async function loadCloseOut() {
+  try {
+    const rows = await fetchSheet('CloseOut');
+
+    // Filter out fully completed rows (all 6 boxes TRUE)
+    const active = rows.filter(r => {
+      if (!r['Project']) return false;
+      return CLOSEOUT_COLS.some(col => String(r[col]||'').toLowerCase() !== 'true');
+    });
+
+    document.getElementById('closeout-rows').innerHTML = active.length
+      ? active.map(r => {
+          const checked = CLOSEOUT_COLS.filter(col => String(r[col]||'').toLowerCase() === 'true').length;
+          const total = CLOSEOUT_COLS.length;
+          const pct = Math.round((checked / total) * 100);
+
+          // Progress bar color
+          const barColor = pct === 100 ? '#3A9E78' : pct >= 50 ? '#B8823A' : '#B4645A';
+
+          const checkboxCells = CLOSEOUT_COLS.map(col => {
+            const done = String(r[col]||'').toLowerCase() === 'true';
+            return `<td class="ctr"><div class="cb ${done ? 'done' : ''}"></div></td>`;
+          }).join('');
+
+          const progressHtml = `
+            <td class="ctr">
+              <div style="display:flex;align-items:center;gap:8px;min-width:80px;">
+                <div style="flex:1;height:6px;background:var(--linen2);border-radius:3px;overflow:hidden;">
+                  <div style="height:100%;width:${pct}%;background:${barColor};border-radius:3px;transition:width 0.3s;"></div>
+                </div>
+                <span style="font-size:0.7rem;font-weight:700;color:var(--stone);min-width:28px;">${pct}%</span>
+              </div>
+            </td>`;
+
+          return `<tr>
+            <td class="client-name">${esc(r['Project']||'')}</td>
+            ${checkboxCells}
+            ${progressHtml}
+          </tr>`;
+        }).join('')
+      : `<tr><td colspan="8" class="empty-row">All projects closed out! 🎉</td></tr>`;
+
+    show('closeout-load', 'closeout-body');
+  } catch(e) {
+    showError('closeout-load', 'Could not load Close Out tab. Make sure a CloseOut tab exists in your Google Sheet. ' + e.message);
   }
 }
 

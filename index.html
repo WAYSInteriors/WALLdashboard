@@ -743,15 +743,26 @@ async function loadInquiries() {
 async function loadProjectWrap() {
   try {
     const rows = await fetchSheet('Photos');
-    document.getElementById('photos-rows').innerHTML = rows.length
-      ? rows.map(r => `<tr>
+    const WRAP_COLS = ['Gift','Photos','Edited','Review'];
+
+    // Filter out rows where all boxes are TRUE or X (complete either way)
+    const active = rows.filter(r => {
+      if (!r['Client']) return false;
+      return WRAP_COLS.some(col => {
+        const v = String(r[col]||'').toLowerCase().trim();
+        return v !== 'true' && v !== 'x';
+      });
+    });
+
+    document.getElementById('photos-rows').innerHTML = active.length
+      ? active.map(r => `<tr>
           <td class="client-name">${esc(r['Client']||'')}</td>
           <td class="ctr">${cbHtml(r['Gift'])}</td>
           <td class="ctr">${cbHtml(r['Photos'])}</td>
           <td class="ctr">${cbHtml(r['Edited'])}</td>
           <td class="ctr">${cbHtml(r['Review'])}</td>
         </tr>`).join('')
-      : `<tr><td colspan="5" class="empty-row">No projects to wrap 🎉</td></tr>`;
+      : `<tr><td colspan="5" class="empty-row">All projects wrapped! 🎉</td></tr>`;
     show('projectwrap-load', 'projectwrap-body');
   } catch(e) {
     showError('projectwrap-load', 'Could not load Project Wrap tab. ' + e.message);

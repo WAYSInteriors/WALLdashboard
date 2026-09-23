@@ -170,10 +170,11 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
 
 <div class="tab-bar">
   <div class="tab active" onclick="switchTab('agenda',this)">Agenda</div>
-  <div class="tab" onclick="switchTab('wall',this)">Wall Reviews</div>
   <div class="tab" onclick="switchTab('operations',this)">Operations</div>
-  <div class="tab" onclick="switchTab('inquiries',this)">Open Inquiries</div>
+  <div class="tab" onclick="switchTab('projectwrap',this)">Project Wrap 🎁</div>
   <div class="tab" onclick="switchTab('closeout',this)">Close Out</div>
+  <div class="tab" onclick="switchTab('inquiries',this)">Open Inquiries</div>
+  <div class="tab" onclick="switchTab('wall',this)">The Wall</div>
 </div>
 
 <div class="main">
@@ -295,7 +296,13 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
       <div id="social-grid" style="display:none;grid-template-columns:repeat(2,1fr);gap:12px;"></div>
     </div>
 
-    <!-- PROJECT WRAP -->
+  </div>
+</div>
+
+<!-- PROJECT WRAP -->
+<div id="panel-projectwrap" class="panel">
+  <div id="projectwrap-load" class="loading-screen"><div class="spinner"></div><div class="loading-text">Loading…</div></div>
+  <div id="projectwrap-body" style="display:none">
     <div class="card">
       <div style="margin-bottom:16px;">
         <div class="section-eyebrow">Project Wrap 🎁</div>
@@ -306,7 +313,6 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
         <tbody id="photos-rows"></tbody>
       </table>
     </div>
-
   </div>
 </div>
 
@@ -342,12 +348,14 @@ hr { border: none; border-top: 1px solid var(--linen2); margin: 20px 0; }
           <thead>
             <tr>
               <th>Project</th>
+              <th class="ctr">Date<br>Added</th>
               <th class="ctr">Invoices<br>Closed</th>
               <th class="ctr">Phy. Wall<br>Archive</th>
               <th class="ctr">Scanned<br>into Houzz</th>
               <th class="ctr">Close Out<br>Email</th>
               <th class="ctr">Houzz<br>Archive</th>
               <th class="ctr">Harvest<br>Archive</th>
+              <th class="ctr">Date<br>Closed</th>
               <th class="ctr">Progress</th>
             </tr>
           </thead>
@@ -409,6 +417,7 @@ async function loadAll() {
     loadWall(),
     loadOperationsTab(),
     loadInquiries(),
+    loadProjectWrap(),
     loadCloseOut()
   ]);
   const now = new Date();
@@ -594,10 +603,9 @@ const SOCIAL_SUBS = ['Published Content','Planned Content','Team Content','Newsl
 // ── OPERATIONS TAB ──
 async function loadOperationsTab() {
   try {
-    const [opsRows, claimRows, photoRows] = await Promise.all([
+    const [opsRows, claimRows] = await Promise.all([
       fetchSheet('OpsUpdate'),
       fetchSheet('Claims'),
-      fetchSheet('Photos'),
     ]);
 
     // Operations Update
@@ -699,17 +707,6 @@ async function loadOperationsTab() {
     socialLoad.style.display = 'none';
     socialGrid.style.display = 'grid';
 
-    // Project Wrap
-    document.getElementById('photos-rows').innerHTML = photoRows.length
-      ? photoRows.map(r => `<tr>
-          <td class="client-name">${esc(r['Client']||'')}</td>
-          <td class="ctr">${cbHtml(r['Gift'])}</td>
-          <td class="ctr">${cbHtml(r['Photos'])}</td>
-          <td class="ctr">${cbHtml(r['Edited'])}</td>
-          <td class="ctr">${cbHtml(r['Review'])}</td>
-        </tr>`).join('')
-      : `<tr><td colspan="5" class="empty-row">No projects to wrap 🎉</td></tr>`;
-
     show('ops-tab-load', 'ops-tab-body');
   } catch(e) {
     showError('ops-tab-load', 'Could not load Operations tab. ' + e.message);
@@ -742,6 +739,25 @@ async function loadInquiries() {
   }
 }
 
+// ── PROJECT WRAP ──
+async function loadProjectWrap() {
+  try {
+    const rows = await fetchSheet('Photos');
+    document.getElementById('photos-rows').innerHTML = rows.length
+      ? rows.map(r => `<tr>
+          <td class="client-name">${esc(r['Client']||'')}</td>
+          <td class="ctr">${cbHtml(r['Gift'])}</td>
+          <td class="ctr">${cbHtml(r['Photos'])}</td>
+          <td class="ctr">${cbHtml(r['Edited'])}</td>
+          <td class="ctr">${cbHtml(r['Review'])}</td>
+        </tr>`).join('')
+      : `<tr><td colspan="5" class="empty-row">No projects to wrap 🎉</td></tr>`;
+    show('projectwrap-load', 'projectwrap-body');
+  } catch(e) {
+    showError('projectwrap-load', 'Could not load Project Wrap tab. ' + e.message);
+  }
+}
+
 // ── CLOSE OUT ──
 const CLOSEOUT_COLS = ['Invoices Closed','Phy. Wall Archive','Scanned into Houzz','Close Out Email','Houzz Archive','Harvest Archive'];
 
@@ -757,6 +773,9 @@ async function loadCloseOut() {
 
     document.getElementById('closeout-rows').innerHTML = active.length
       ? active.map(r => {
+          const dateAdded = r['Date Added'] ? `<span style="font-size:0.75rem;color:var(--stone);font-family:'Cormorant Garamond',serif;font-style:italic;">${esc(r['Date Added'])}</span>` : '<span style="color:var(--linen2);font-size:0.75rem;">—</span>';
+          const dateClosed = r['Date Closed'] ? `<span style="font-size:0.75rem;color:var(--sage);font-family:'Cormorant Garamond',serif;font-style:italic;">${esc(r['Date Closed'])}</span>` : '<span style="color:var(--linen2);font-size:0.75rem;">—</span>';
+
           const checked = CLOSEOUT_COLS.filter(col => String(r[col]||'').toLowerCase() === 'true').length;
           const total = CLOSEOUT_COLS.length;
           const pct = Math.round((checked / total) * 100);
@@ -781,11 +800,13 @@ async function loadCloseOut() {
 
           return `<tr>
             <td class="client-name">${esc(r['Project']||'')}</td>
+            <td class="ctr">${dateAdded}</td>
             ${checkboxCells}
+            <td class="ctr">${dateClosed}</td>
             ${progressHtml}
           </tr>`;
         }).join('')
-      : `<tr><td colspan="8" class="empty-row">All projects closed out! 🎉</td></tr>`;
+      : `<tr><td colspan="10" class="empty-row">All projects closed out! 🎉</td></tr>`;
 
     show('closeout-load', 'closeout-body');
   } catch(e) {
